@@ -1,4 +1,5 @@
-import { FaGraduationCap, FaQuoteLeft } from "react-icons/fa"
+/* eslint-disable react/no-unescaped-entities */
+import { FaGraduationCap } from "react-icons/fa"
 import Image from "next/image"
 
 export default function TestimonialSection() {
@@ -36,12 +37,12 @@ export default function TestimonialSection() {
       <div className="overflow-hidden relative mx-8 my-8 text-white bg-[#1f1f1f] rounded-[25px] md:mx-12 lg:mx-16 xl:mx-20 md:my-12 lg:my-16 xl:my-20">
         {/* Background decorative element */}
         <div className="absolute top-0 right-0 w-1/3 h-full opacity-10">
-          <div className="absolute right-0 top-1/2 w-96 h-96 bg-gradient-to-br from-gray-700 to-gray-800 rounded-full blur-3xl transform -translate-y-1/2"></div>
+          <div className="absolute right-0 transform -translate-y-1/2 rounded-full top-1/2 w-96 h-96 bg-gradient-to-br from-gray-700 to-gray-800 blur-3xl"></div>
         </div>
         <Image src="/testimonial-side-image.png" alt="Scitor Academy" width={500} height={100}  className=" h-[500px] object-contain absolute right-0  "/>
 
         <div className="container relative z-10 px-6 py-16 mx-auto md:px-8 lg:px-12 xl:px-24 md:py-20 lg:py-24 xl:py-28">
-          <div className="grid gap-12 items-center lg:grid-cols-2 lg:gap-16">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             {/* Left side - Main content */}
             <div className="space-y-8 lg:space-y-12">
               <div className="space-y-4">
@@ -64,8 +65,8 @@ export default function TestimonialSection() {
 
               {/* Statistics */}
               <div>
-              <FaGraduationCap className="mb-4 w-12 h-12 text-gray-500" />
-              <div className="flex flex-col justify-center items-center py-10 w-full rounded-lg">
+              <FaGraduationCap className="w-12 h-12 mb-4 text-gray-500" />
+              <div className="flex flex-col items-center justify-center w-full py-10 rounded-lg">
                
                 <div className="text-5xl font-extrabold tracking-tight select-none md:text-6xl lg:text-7xl text-outline">12,000+</div>
                 <p className="mt-2 text-lg font-light tracking-wide text-gray-500 md:text-xl">Students Empowered Worldwide</p>

@@ -22,7 +22,7 @@ export default function OurValues() {
             </div>
             <h3 className="mb-2 text-lg font-semibold text-gray-900 sm:text-xl sm:mb-3">Personalized Coaching</h3>
             <p className="text-sm leading-relaxed text-gray-600 sm:text-base">
-              Get expert guidance with customized lessons based on your goals, level, and speaking style. Whether you're
+              Get expert guidance with customized lessons based on your goals, level, and speaking style. Whether you&apos;re
               a beginner or job seeker, we tailor the learning to fit you.
             </p>
           </div>
@@ -36,7 +36,7 @@ export default function OurValues() {
             </div>
             <h3 className="mb-2 text-lg font-semibold text-gray-900 sm:text-xl sm:mb-3">Arabic & English Support</h3>
             <p className="text-sm leading-relaxed text-gray-600 sm:text-base">
-              Learn in the language you're most comfortable with. All lessons, instructions, and support are available
+              Learn in the language you&apos;re most comfortable with. All lessons, instructions, and support are available
               in both English and Arabic for a smooth learning experience.
             </p>
           </div>

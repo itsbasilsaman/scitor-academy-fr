@@ -1,7 +1,7 @@
 "use client"
 
 // Removed: import { Button } from "@/components/ui/button"
-import { FiMessageCircle, FiHelpCircle } from "react-icons/fi"
+// ...existing code...
 import { GoArrowUpRight } from "react-icons/go";
 
 export default function HelpSection() {

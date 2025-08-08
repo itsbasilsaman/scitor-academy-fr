@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// ...existing code...
 "use client"
 
 import { useState } from "react"
@@ -16,18 +17,7 @@ interface ButtonProps {
   [key: string]: any
 }
 
-interface CardProps {
-  children: React.ReactNode
-  className?: string
-  [key: string]: any
-}
-
-interface CardContentProps {
-  children: React.ReactNode
-  className?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
-}
+// ...existing code...
 
 interface Course {
   id: number
@@ -64,22 +54,7 @@ const Button = ({ children, onClick, className = "", variant = "default", size =
   )
 }
 
-// Manual Card Components
-const Card = ({ children, className = "", ...props }: CardProps) => {
-  return (
-    <div className={`rounded-lg border bg-card text-card-foreground shadow-sm ${className}`} {...props}>
-      {children}
-    </div>
-  )
-}
-
-const CardContent = ({ children, className = "", ...props }: CardContentProps) => {
-  return (
-    <div className={`p-6 pt-0 ${className}`} {...props}>
-      {children}
-    </div>
-  )
-}
+// ...existing code...
 
 export default function OurCourses() {
   const [currentSlide, setCurrentSlide] = useState(1)
