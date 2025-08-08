@@ -2,7 +2,7 @@ import { FaArrowRight } from "react-icons/fa"
 
 export default function HeroSection() {
   return (
-    <div className="w-full h-auto p-4 bg-gray-50 md:p-8 lg:p-16">
+    <div className="w-full h-auto p-4 md:p-8 lg:p-16">
       <div
         className="relative p-8 overflow-hidden rounded-3xl md:p-12 lg:p-16 xl:p-20"
         style={{

@@ -33,13 +33,13 @@ export default function TestimonialSection() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="overflow-hidden relative mx-8 my-8 text-white bg-[#1f1f1f] rounded-[25px] md:mx-12 lg:mx-16 xl:mx-20 md:my-12 lg:my-16 xl:my-20">
+  <div className="min-h-screen p-4 overflow-x-hidden bg-white md:p-8">
+      <div className="overflow-hidden relative mx-0 my-8 text-white bg-[#1f1f1f] rounded-[25px] sm:mx-8 md:mx-12 lg:mx-16 xl:mx-20 md:my-12 lg:my-16 xl:my-20">
         {/* Background decorative element */}
         <div className="absolute top-0 right-0 w-1/3 h-full opacity-10">
           <div className="absolute right-0 transform -translate-y-1/2 rounded-full top-1/2 w-96 h-96 bg-gradient-to-br from-gray-700 to-gray-800 blur-3xl"></div>
         </div>
-        <Image src="/testimonial-side-image.png" alt="Scitor Academy" width={500} height={100}  className=" h-[500px] object-contain absolute right-0  "/>
+  <Image src="/testimonial-side-image.png" alt="Scitor Academy" width={500} height={100}  className="h-[500px] object-contain absolute right-0 hidden sm:block"/>
 
         <div className="container relative z-10 px-6 py-16 mx-auto md:px-8 lg:px-12 xl:px-24 md:py-20 lg:py-24 xl:py-28">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
@@ -77,7 +77,7 @@ export default function TestimonialSection() {
             {/* Right side - Testimonial cards */}
             <div className="space-y-6 lg:space-y-8">
               {testimonials.map((testimonial, index) => (
-                <div key={index} className="rounded-[25px] border border-gray-700 backdrop-blur-sm bg-[#282828] relative py-2 pt-8">
+                <div key={index} className="rounded-[25px] border border-gray-700 backdrop-blur-sm bg-[#282828] relative py-2 pt-8 w-full sm:w-[350px] mx-auto">
                   <div className="p-4 lg:p-6">
                      <Image src="/quote.png" alt="Scitor Academy" width={50} height={50}  className=" w-[30px]  object-contain absolute left-3 top-6 "/>
                     <p className="mb-4 text-sm leading-relaxed text-white lg:text-base lg:mb-6 font-regular">

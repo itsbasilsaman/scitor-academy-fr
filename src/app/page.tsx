@@ -1,3 +1,4 @@
+import AnimatedButtonRow from "@/component/AnimationBox";
 import ContentSection from "@/component/ContentSection";
 import HeroSection from "@/component/HeroSection";
 import InstructorTeam from "@/component/InstructorTeam";
@@ -15,8 +16,10 @@ export default function Home() {
      <OurCourses/>
  
      <TestimonialSection/>
-     <HeroSection/>
+     
      <InstructorTeam/>
+     <HeroSection/>
+     <AnimatedButtonRow/>
     </>
   );
 }

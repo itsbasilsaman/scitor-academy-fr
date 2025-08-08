@@ -1,33 +1,124 @@
- 
+"use client"
 import Image from "next/image";
+import React, { useState, useEffect, useRef } from "react";
 import { GoArrowUpRight } from "react-icons/go";
 
 export default function ContentSection() {
+  // Highlight groups and animation settings
+  const highlightGroups = [
+    {
+      words: ["Scitor Academy"],
+      color: "text-[#1FD5EB]",
+      animation: "animate-highlight-cyan",
+    },
+    {
+      words: ["expert instructors"],
+      color: "text-[#6E06F6]",
+      animation: "animate-highlight-purple",
+    },
+    {
+      words: ["native-style content"],
+      color: "text-[#1FD5EB]",
+      animation: "animate-highlight-cyan",
+    },
+    {
+      words: ["personalized coaching"],
+      color: "text-[#6E06F6]",
+      animation: "animate-highlight-purple",
+    },
+  ];
+
+  const baseText =
+    "Scitor Academy combines expert instructors, native-style content, and personalized coaching to make English accessible to everyone.";
+
+  const [activeGroup, setActiveGroup] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Cycle highlight group
+  useEffect(() => {
+    if (!paused) {
+      intervalRef.current = setInterval(() => {
+        setActiveGroup((prev) => (prev + 1) % highlightGroups.length);
+      }, 500);
+    }
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [paused]);
+
+  // Split text into words/groups
+  function renderAnimatedText() {
+    let rendered = baseText;
+    highlightGroups.forEach((group, idx) => {
+      group.words.forEach((word) => {
+        const regex = new RegExp(`(${word})`, "g");
+        rendered = rendered.replace(
+          regex,
+          (match) =>
+            `<span class='${
+              idx === activeGroup
+                ? `${group.color} ${group.animation} cursor-pointer`
+                : "text-gray-900 transition-all"
+            }' data-group='${idx}'>${match}</span>`
+        );
+      });
+    });
+    return rendered;
+  }
+
+  // Pause/resume on click
+  function handleClick(e: React.MouseEvent<HTMLHeadingElement>) {
+    const target = e.target as HTMLElement;
+    if (target.dataset.group) {
+      setPaused((prev) => !prev);
+    }
+  }
+
+  // Add hover effect
+  function handleMouseOver(e: React.MouseEvent<HTMLHeadingElement>) {
+    const target = e.target as HTMLElement;
+    if (target.dataset.group) {
+      target.classList.add("scale-105");
+    }
+  }
+  function handleMouseOut(e: React.MouseEvent<HTMLHeadingElement>) {
+    const target = e.target as HTMLElement;
+    if (target.dataset.group) {
+      target.classList.remove("scale-105");
+    }
+  }
+
   return (
-    <section className="relative h-auto overflow-hidden lg:h-screen">
+    <section className="relative h-auto py-4 overflow-x-hidden lg:h-screen">
       {/* Background logo image - responsive positioning */}
       <div className="absolute -translate-y-1/2 left-4 sm:left-8 md:left-12 top-1/2 -translate-x-1/4 sm:-translate-x-1/6 md:-translate-x-1/8 lg:-translate-x-1/10">
         <div className="relative">
          
            <Image
-            src="/scitor-bg-logo.png" 
-            alt="Scitor Academy Background Logo" 
+            src="/scitor-bg-logo.png"
+            alt="Scitor Academy Background Logo"
+            width={320}
+            height={320}
             className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-[30rem] xl:h-[30rem] object-contain opacity-60"
           />
         </div>
       </div>
 
       {/* Main content - responsive layout */}
-      <div className="relative z-10 flex flex-col justify-center min-h-screen px-4 py-8 lg:ml-86 sm:px-6 md:px-8 lg:px-12 sm:py-12 md:py-16 lg:py-20">
+  <div className="relative z-10 flex flex-col justify-center px-4 py-8 sm:px-6 md:px-8 lg:px-12 sm:py-12 md:py-16 lg:py-20">
         <div className="max-w-4xl mx-auto text-center lg:text-left lg:ml-32 xl:ml-48 lg:mr-0 lg:max-w-3xl">
-          {/* Main heading - responsive typography */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-5xl font-regular leading-tight mb-6 sm:mb-8 md:mb-12 lg:mb-16 lg:max-w-2xl">
-            <span className="text-cyan-400">Scitor Academy</span>{" "}
-            <span className="text-gray-900">
-              combines expert instructors, native-style content, and personalized coaching to make English accessible to
-              everyone.
-            </span>
-          </h1>
+          {/* Main heading - animated highlight groups */}
+          <h1
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-5xl font-regular leading-tight mb-6 sm:mb-8 md:mb-12 lg:mb-16 lg:max-w-2xl"
+            onClick={handleClick}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+            dangerouslySetInnerHTML={{ __html: renderAnimatedText() }}
+          />
 
           {/* Bottom section with tagline and button - responsive spacing */}
           <div className="flex flex-col gap-4 mt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:mt-auto lg:max-w-2xl">

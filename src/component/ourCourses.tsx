@@ -107,7 +107,7 @@ export default function OurCourses() {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
+    <div className="h-auto p-4 md:p-8">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-8 text-center md:mb-12">
@@ -184,12 +184,14 @@ export default function OurCourses() {
                   )}
                 </div>
 
-                      {/* Floating Diagonal Arrow Button (Bottom Right, Outside Card) */}
-                      <div className="absolute z-10 -bottom-4 -right-4">
-                        <div className="flex items-center justify-center w-10 h-10 transition-colors bg-black rounded-full shadow-lg cursor-pointer hover:bg-gray-800">
-                          <FiArrowUpRight className="w-5 h-5 text-white" />
-                        </div>
-                      </div>
+                      {/* Floating Action Button (Bottom Right, inside card, with gap) */}
+                      <button
+                        className="absolute z-20 flex items-center justify-center transition-colors bg-black rounded-full shadow-lg cursor-pointer bottom-4 right-4 w-11 h-11 hover:bg-gray-800"
+                        aria-label="Go to course details"
+                        type="button"
+                      >
+                        <FiArrowUpRight className="w-6 h-6 text-white" />
+                      </button>
               </div>
             </div>
           ))}
@@ -203,8 +205,8 @@ export default function OurCourses() {
               style={{ transform: `translateX(-${currentSlide * 100}%)` }}
             >
               {courses.map((course) => (
-                <div key={course.id} className="flex-shrink-0 w-full px-2">
-                  <div className={`w-full max-w-[300px] h-[420px] rounded-2xl shadow-lg overflow-hidden mx-auto transition-transform duration-300 hover:scale-105 ${course.bgColor} relative`}>
+                <div key={course.id} className="flex-shrink-0 w-full px-0">
+                  <div className={`w-full h-[420px] rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 ${course.bgColor} relative`}>
                     {/* Course Image - 70% height */}
                     <div className="relative h-[70%] overflow-hidden">
                       <Image
@@ -261,11 +263,13 @@ export default function OurCourses() {
                       </div>
 
                       {/* Floating Diagonal Arrow Button (Bottom Right, Outside Card) */}
-                      <div className="absolute z-10 -bottom-4 -right-4">
-                        <div className="flex items-center justify-center w-10 h-10 transition-colors bg-black rounded-full shadow-lg cursor-pointer hover:bg-gray-800">
-                          <FiArrowUpRight className="w-5 h-5 text-white" />
-                        </div>
-                      </div>
+                      <button
+                        className="absolute z-20 flex items-center justify-center transition-colors bg-black rounded-full shadow-lg cursor-pointer bottom-4 right-4 w-11 h-11 hover:bg-gray-800"
+                        aria-label="Go to course details"
+                        type="button"
+                      >
+                        <FiArrowUpRight className="w-6 h-6 text-white" />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -278,7 +282,7 @@ export default function OurCourses() {
             <Button
               variant="ghost"
               size="icon"
-              className="bg-white rounded-full shadow-md hover:shadow-lg"
+              className="bg-white rounded-full "
               onClick={prevSlide}
             >
               <IoChevronBack className="w-5 h-5" />
@@ -300,10 +304,10 @@ export default function OurCourses() {
             <Button
               variant="ghost"
               size="icon"
-              className="bg-white rounded-full shadow-md hover:shadow-lg"
+              className="bg-white "
               onClick={nextSlide}
             >
-              <IoChevronForward className="w-5 h-5" />
+              <IoChevronForward className="w-5 h-5 rounded-full" />
             </Button>
           </div>
         </div>

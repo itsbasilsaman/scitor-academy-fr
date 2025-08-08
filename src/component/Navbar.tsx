@@ -12,8 +12,8 @@ const navigationItems = [
   { name: "HOME", href: "/" },
   { name: "ABOUT", href: "/about-us" },
   { name: "COURSES", href: "/courses" },
-  { name: "DEMOS", href: "/demos" },
-  { name: "PRICING", href: "/pricing" },
+  { name: "WHY CHOOSE US", href: "/why-choose-us" },
+ 
   { name: "CONTACT", href: "/contact-us" },
 ]
 
@@ -21,7 +21,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <header className="fixed z-50 transition-all bg-white border border-b border-gray-100 border-gray-200 rounded-full top-2 left-2 right-2 sm:top-4 sm:left-8 sm:right-8 lg:top-4 lg:left-16 lg:right-16">
+    <header className="fixed z-50 transition-all bg-white border border-b border-gray-300 rounded-full top-2 left-2 right-2 sm:top-4 sm:left-8 sm:right-8 lg:top-4 lg:left-16 lg:right-16">
       <div className="container px-2 mx-auto sm:px-4 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
           {/* Mobile Menu Button */}
@@ -130,9 +130,9 @@ export default function Navbar() {
               Get in Touch
             </button>
             <button
-              className="px-4 py-2 text-sm font-medium text-white transition-colors bg-purple-600 rounded-md hover:bg-purple-700 sm:inline-block lg:hidden"
+              className="rounded-full text-[#6606E3]  sm:inline-block lg:hidden"
             >
-              Contact
+               <CiGlobe className="text-[28px] sm:text-[30px]" />
             </button>
           </div>
         </div>

@@ -41,25 +41,22 @@ function CardContent({ children, className = "" }: CardProps) {
 
 export default function MainBanner() {
   return (
-    <div className="relative w-full max-h-screen p-2 sm:p-4 bg-white bg-gradient-to-br md:p-8">
-    
-  <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px] bg-cyan-300 rounded-full opacity-30 blur-[120px] sm:blur-[200px]"></div>
-  
-  
-  <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px] bg-purple-300 rounded-full opacity-30 blur-[120px] sm:blur-[200px]"></div>
-
+    <div className="relative w-full h-auto px-2 overflow-x-hidden bg-white hp-2 sm:p-4 bg-gradient-to-br md:p-8">
+      {/* Hide blurred circles on mobile */}
+      <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px] bg-cyan-300 rounded-full opacity-30 blur-[120px] sm:blur-[200px] hidden xs:block sm:block md:block"></div>
+      <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px] bg-purple-300 rounded-full opacity-30 blur-[120px] sm:blur-[200px] hidden xs:block sm:block md:block"></div>
       <div className="mx-auto px-2 sm:px-4 md:px-8 pt-[60px] sm:pt-[90px] ">
-        <div className="grid items-end grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12">
+        <div className="grid items-end grid-cols-1 gap-0 sm:gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Left Section */}
           <div className="flex flex-col justify-between h-full space-y-6 sm:space-y-8">
             {/* Main Heading */}
             <div className="space-y-4 sm:space-y-6">
-              <h1 className="text-2xl sm:text-4xl text-gray-900 font-regular md:text-5xl pt-4 sm:pt-10 max-w-full sm:max-w-[540px]">
+              <h1 className="text-2xl sm:text-4xl text-gray-900 font-medium sm:font-regular md:text-5xl  pt-8 sm:pt-10 max-w-full sm:max-w-[540px]">
                 Start learning today with expert-led lessons.
               </h1>
-              <Button className="px-2 py-2 sm:py-3 text-gray-900 transition-all duration-200 bg-white border border-gray-800 rounded-lg hover:bg-gray-50 group w-full sm:w-auto">
+              <Button className="w-full text-[18px] px-2 py-3 font-semibold text-gray-900 transition-all duration-200 bg-white border border-gray-800 rounded-[15px] font-sem sm:py-3 hover:bg-gray-50 group sm:w-auto">
                 Get in Touch
-                <GoArrowUpRight className="ml-2 sm:ml-3 h-5 w-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <GoArrowUpRight className="ml-2 sm:ml-3 h-5 w-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform  " />
               </Button>
             </div>
 
@@ -114,7 +111,7 @@ export default function MainBanner() {
 
           {/* Right Section */}
           <div className="relative mt-6 lg:mt-0">
-            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br from-purple-200 to-purple-300 min-h-[260px] sm:min-h-[400px] md:min-h-[500px] lg:min-h-[560px]">
+            <div className="relative rounded-3xl sm:rounded-3xl overflow-hidden bg-gradient-to-br from-purple-200 to-purple-300 min-h-[260px] sm:min-h-[400px] md:min-h-[500px] lg:min-h-[560px]">
               {/* Hero Image */}
               <Image
                 src="https://www.skillstork.org/blog/wp-content/uploads/2022/11/modern-education-Skillstork.jpg"
@@ -127,19 +124,19 @@ export default function MainBanner() {
               {/* Overlay Text */}
               <div className="absolute inset-0 bg-black/20">
                 <div className="absolute top-4 right-4 left-4 sm:top-8 sm:right-8 sm:left-8">
-                  <h2 className="text-lg sm:text-2xl md:text-3xl leading-tight text-white font-regular md:text-4xl ">
+                  <h2 className="text-lg leading-tight text-white sm:text-2xl md:text-3xl font-regular ">
                     Transforming learners into achievers
                   </h2>
                 </div>
 
                 {/* Video Preview Card */}
-                <div className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3">
-                  <div className="pr-1 sm:pr-2 border-0 shadow-lg rounded-xl backdrop-blur-sm bg-white/95">
-                    <CardContent className="p-1 sm:p-2 rounded-lg ">
+                <div className="absolute bottom-2 left-2 right-2 lg:right-auto sm:bottom-3 sm:left-3">
+                  <div className="pr-1 border-0 shadow-lg sm:pr-2 rounded-xl backdrop-blur-sm bg-white/95">
+                    <CardContent className="p-1 rounded-lg sm:p-2 ">
                       <div className="flex items-center gap-2 sm:gap-4">
                         {/* Video Thumbnail */}
                         <div className="relative flex-shrink-0">
-                          <div className="relative w-14 h-10 sm:w-20 sm:h-16 overflow-hidden rounded-lg">
+                          <div className="relative h-10 overflow-hidden rounded-lg w-14 sm:w-20 sm:h-16">
                             <Image
                               src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=80&h=64&fit=crop&crop=center"
                               alt="Video thumbnail"
@@ -148,7 +145,7 @@ export default function MainBanner() {
                             />
                             
                             {/* Play button overlay */}
-                            <div className="absolute flex items-center justify-center gap-0.5 sm:gap-1 px-0.5 sm:px-1 py-0.5 sm:py-1 rounded-full bottom-1 left-1 bg-black/70">
+                            <div className="absolute flex items-center justify-center gap-0.5 sm:gap-1 px-0.5 sm:px-1 py-0.5 sm:py-1 rounded-md sm:rounded-full bottom-1 left-1 bg-black/70">
                               <Image
                                 src="/play-video-icon.png"
                                 alt="Play video icon"
@@ -156,14 +153,14 @@ export default function MainBanner() {
                                 height={10}
                                 className="w-2.5 sm:w-3"
                               />
-                              <span className="text-white text-[7px] sm:text-[8px] font-medium">Play Video</span>
+                              <span className="text-white  text-[4px] sm:text-[8px] font-medium">Play Video</span>
                             </div>
                           </div>
                         </div>
                         
                         {/* Text Content */}
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-xs sm:text-sm font-medium leading-tight text-gray-900">
+                          <h3 className="text-xs font-medium leading-tight text-gray-900 sm:text-sm">
                             See It in Action! Watch<br className="hidden sm:block" />
                             Our Demo Video to<br className="hidden sm:block" />
                             Discover More...

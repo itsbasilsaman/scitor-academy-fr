@@ -30,7 +30,7 @@ const instructors = [
 
 export default function InstructorTeam() {
   return (
-    <section className="px-4 py-12 bg-gray-50 sm:px-6 lg:px-8">
+  <section className="px-4 py-12 overflow-x-hidden sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-12 text-center">
@@ -39,11 +39,11 @@ export default function InstructorTeam() {
         </div>
         
         {/* Instructors Grid */}
-        <div className="grid grid-cols-1         gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {instructors.map((instructor) => (
             <div key={instructor.id} className="cursor-pointer group">
               {/* Image Container */}
-              <div className="overflow-hidden relative mb-4 bg-white rounded-2xl shadow-sm transition-shadow duration-300 hover:shadow-md">
+              <div className="relative mb-4 overflow-hidden transition-shadow duration-300 bg-white shadow-sm rounded-2xl hover:shadow-md">
                 <div className="aspect-[4/5] relative">
                   <Image
                     src={instructor.image || "/placeholder.svg"}
@@ -53,7 +53,7 @@ export default function InstructorTeam() {
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                   {/* Arrow Icon */}
-                  <div className="flex absolute right-4 bottom-4 justify-center items-center w-10 h-10 bg-black rounded-full transition-colors duration-300 group-hover:bg-gray-800">
+                  <div className="absolute flex items-center justify-center w-10 h-10 transition-colors duration-300 bg-black rounded-full right-4 bottom-4 group-hover:bg-gray-800">
                     <HiArrowUpRight className="w-5 h-5 text-white" />
                   </div>
                 </div>
