@@ -3,7 +3,7 @@
 
 export default function WhyChooseUsContent() {
   return (
-    <div className="container px-4 py-12 mx-auto md:py-20">
+    <div className="px-4 py-12 mx-auto  md:py-20">
       <p className="text-sm font-medium text-gray-600 mb-2 pl-2 md:pl-[180px] text-center md:text-left">
       Why Choose Us
       </p>
