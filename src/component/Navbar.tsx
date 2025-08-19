@@ -11,7 +11,7 @@ import Image from "next/image";
 const navigationItems = [
   { name: "HOME", href: "/" },
   { name: "ABOUT", href: "/about-us" },
-  { name: "COURSES", href: "/courses" },
+  { name: "COURSES", href: "/all-courses" },
   { name: "WHY CHOOSE US", href: "/why-choose-us" },
  
   { name: "CONTACT", href: "/contact-us" },
@@ -51,13 +51,15 @@ export default function Navbar() {
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center space-x-2">
                 
-                    <Image
-                                src="/scitor-logo.png"
-                                alt="Play video icon"
-                                width={150}
-                                height={150}
-                                className="object-cover w-8 sm:w-10 md:w-20"
-                              />
+                  <Link href={"/"} className="cursor-pointer">
+                      <Image
+                                  src="/scitor-logo.png"
+                                  alt="Play video icon"
+                                  width={150}
+                                  height={150}
+                                  className="object-cover w-8 sm:w-10 md:w-20"
+                                />
+                  </Link >
                   </div>
                   <button
                     className="p-2 text-gray-500 rounded-full hover:text-purple-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -93,13 +95,15 @@ export default function Navbar() {
 
           {/* Logo */}
           <div className="flex items-center space-x-2">
-             <Image
-                                src="/scitor-logo.png"
-                                alt=" "
-                                width={150}
-                                height={150}
-                                className="w-16 ml-4"
-                              />
+            <Link href={"/"} className="cursor-pointer">
+               <Image
+                                  src="/scitor-logo.png"
+                                  alt=" "
+                                  width={150}
+                                  height={150}
+                                  className="w-16 ml-4"
+                                />
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
