@@ -1,4 +1,5 @@
- import CourseDetailBanner from "@/component/course-detail/Banner";
+import CourseDetailBanner from "@/component/course-detail/Banner";
+import VideoPreviews from "@/component/course-detail/VideoPreviews";
 import CourseContent from "@/component/course-detail/CourseContent";
 import CourseDetails from "@/component/course-detail/CourseDetail";
 import CourseHero from "@/component/course-detail/CourseDetailHero";
@@ -13,6 +14,10 @@ export default function CourseDetail() {
           {/* Main Content */}
           <div className="space-y-6 lg:col-span-2">
             <CourseHero />
+            {/* Video Previews Section - Modern, Udemy-inspired */}
+            <div className="mt-8">
+              <VideoPreviews />
+            </div>
             <CourseContent/>
           </div>
 

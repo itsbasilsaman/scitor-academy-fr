@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
  
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
@@ -16,9 +16,15 @@ const navigationItems = [
  
   { name: "CONTACT", href: "/contact-us" },
 ]
-
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isStudentLoggedIn, setIsStudentLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check for studentId cookie
+    const match = document.cookie.match(/(?:^|; )studentId=([^;]*)/);
+    setIsStudentLoggedIn(!!match);
+  }, []);
 
   return (
     <header className="fixed z-50 transition-all bg-white border border-b border-gray-300 rounded-full top-2 left-2 right-2 sm:top-4 sm:left-8 sm:right-8 lg:top-4 lg:left-16 lg:right-16">
@@ -50,8 +56,7 @@ export default function Navbar() {
               >
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center space-x-2">
-                
-                  <Link href={"/"} className="cursor-pointer">
+                    <Link href={"/"} className="cursor-pointer">
                       <Image
                                   src="/scitor-logo.png"
                                   alt="Play video icon"
@@ -82,12 +87,25 @@ export default function Navbar() {
                   ))}
                 </nav>
                 <div className="pt-6 mt-auto border-t border-gray-100">
-                  <button
-                    className="w-full px-4 py-3 text-base font-semibold text-white transition-colors rounded-lg shadow-md bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Get in Touch
-                  </button>
+                  {isStudentLoggedIn ? (
+                    <Link href={'/student-dashboard'}>
+                      <button
+                        className="w-full px-4 py-3 text-base font-semibold text-white transition-colors rounded-lg shadow-md cursor-pointer bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Go to Dashboard
+                      </button>
+                    </Link>
+                  ) : (
+                    <Link href={'/login'}>
+                      <button
+                        className="w-full px-4 py-3 text-base font-semibold text-white transition-colors rounded-lg shadow-md cursor-pointer bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Student Login
+                      </button>
+                    </Link>
+                  )}
                 </div>
               </aside>
             </div>
@@ -128,11 +146,23 @@ export default function Navbar() {
             >
               <CiGlobe className="text-[28px] sm:text-[30px]" />
             </button>
-            <button
-              className="hidden px-5 py-3 text-sm font-semibold text-white rounded-full transition-colors bg-[#6606E3] hover:bg-purple-900 sm:inline"
-            >
-              Get in Touch
-            </button>
+           {isStudentLoggedIn ? (
+             <Link href="/student-dashboard">
+               <button
+                 className="hidden px-5 cursor-pointer py-3 text-sm font-semibold text-white rounded-full transition-colors bg-[#6606E3] hover:bg-purple-900 sm:inline"
+               >
+                 Go to Dashboard
+               </button>
+             </Link>
+           ) : (
+             <Link href="/login">
+               <button
+                 className="hidden px-5 cursor-pointer py-3 text-sm font-semibold text-white rounded-full transition-colors bg-[#6606E3] hover:bg-purple-900 sm:inline"
+               >
+                 Student Login
+               </button>
+             </Link>
+           )}
             <button
               className="rounded-full text-[#6606E3]  sm:inline-block lg:hidden"
             >
@@ -141,6 +171,8 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+
     </header>
-  )
+  );
 }
+

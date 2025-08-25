@@ -13,11 +13,11 @@ export default function HeroSection() {
       >
         {/* Content */}
         <div className="relative z-10 max-w-4xl">
-          <h1 className="mb-6 text-4xl leading-tight text-white md:text-5xl lg:text-6xl">
+          <h1 className="mb-6 text-4xl leading-tight text-center text-white md:text-5xl lg:text-6xl md:text-left">
             Ready to Speak Fluently or Build Your Career?
           </h1>
 
-          <p className="max-w-6xl mb-8 text-lg text-white text-regular md:text-xl">
+          <p className="max-w-6xl mb-8     text-[15px]  text-white   text-regular md:text-xl">
             Join hundreds of learners transforming their communication skills and careers through{" "}
             <span className="font-semibold">Scitor Academy</span>. We&apos;re here to guide you every step of the way.
           </p>

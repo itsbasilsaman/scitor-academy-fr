@@ -1,15 +1,30 @@
 "use client"
 
 import { useState } from "react"
+import { allowedUsers } from "./allowedUsers";
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineArrowRight } from "react-icons/ai"
 import { MdOutlineArrowOutward } from "react-icons/md";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const [email, setEmail] = useState("")
+  const [userId, setUserId] = useState("")
   const [password, setPassword] = useState("")
-  const [rememberMe, setRememberMe] = useState(false)
+  const [error, setError] = useState("")
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    const found = allowedUsers.find(
+      (user) => user.id === userId && user.password === password
+    );
+    if (found) {
+      setError("");
+      document.cookie = `studentId=${userId}; path=/`;
+      window.location.href = "/student-dashboard";
+    } else {
+      setError("Invalid User ID or Password. Only authorized students can login.");
+    }
+  };
 
   return (
     <div className="relative flex flex-col min-h-screen pt-20 sm:pt-15 lg:flex-row">
@@ -18,34 +33,34 @@ export default function LoginPage() {
         src="/bg.png" 
         alt="Background" 
         fill 
-        className="object-contain object-center z-0" 
+        className="z-0 object-contain object-center" 
         priority
       />
       {/* Overlay for content to ensure readability */}
-      <div className=" " />
+      <div className="" />
       {/* Left Side - Login Form */}
       <div className="relative z-20 flex items-center justify-center flex-1 p-6 lg:p-12">
         <div className="w-full max-w-md space-y-8 duration-500 animate-in fade-in-50">
           <div className="space-y-4 text-center lg:text-left">
-            <h1 className="text-4xl tracking-tight text-gray-900 font-regular lg:text-6xl">Welcome Back!</h1>
-            <p className="text-[16px] gray-600 text- font-regular ">Login to continue your learning journey.</p>
+            <h1 className="text-4xl tracking-tight text-gray-900 font-regular lg:text-6xl">Student Login</h1>
+            <p className="text-[16px] gray-600 text- font-regular ">Login with your Student User ID and Password to access your dashboard.</p>
           </div>
 
           <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
             <div className="space-y-2">
-              <label htmlFor="email" className="ml-8 block text-[12px] font-regular  text-[#737F8D]">
-                Username or Email *
+              <label htmlFor="userid" className="ml-8 block text-[12px] font-regular  text-[#737F8D]">
+                User ID *
               </label>
               <div className="relative flex items-center w-full px-4 transition-all duration-200 border border-gray-400 rounded-full bg-[#F2F8FF] h-14 focus-within:ring-2 focus-within:ring-blue-200">
-                <Image src="/email.png" alt="Email" width={24} height={24} className="w-4 mr-3" />
+                <Image src="/name-card.png" alt="User ID" width={24} height={24} className="w-4 mr-3" />
                 <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="userid"
+                  type="text"
+                  value={userId}
+                  onChange={(e) => setUserId(e.target.value)}
                   className="flex-1 h-full text-base text-gray-700 placeholder-gray-400 bg-transparent border-none outline-none autofill:bg-[#F2F8FF] font-regular"
-                  placeholder="Enter your email"
-                  autoComplete="email"
+                  placeholder="Enter your User ID"
+                  autoComplete="username"
                   style={{ backgroundColor: 'transparent' }}
                 />
               </div>
@@ -63,7 +78,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="flex-1 h-full pr-10 text-base text-gray-700 placeholder-gray-400 bg-transparent border-none outline-none autofill:bg-[#F2F8FF] font-regular"
-                  placeholder="Enter your password"
+                  placeholder="Enter your Password"
                   autoComplete="current-password"
                   style={{ backgroundColor: 'transparent' }}
                 />
@@ -91,27 +106,15 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <input
-                  id="remember"
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label htmlFor="remember" className="text-[12px] font-regular  text-[#737F8D]">
-                  Remember me
-                </label>
-              </div>
-              <button type="button" className="transition-colors  text-[12px] font-regular  text-[#737F8D] hover:text-gray-800">
-                Forgot your password?
-              </button>
-            </div>
+            {/* Error Message */}
+            {error && (
+              <div className="mb-2 text-sm text-center text-red-600">{error}</div>
+            )}
 
             <button
               type="submit"
               className="w-full h-12 bg-gray-900 hover:bg-gray-800 text-white rounded-full font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center group"
+              onClick={handleLogin}
             >
               Login
               <MdOutlineArrowOutward className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -164,12 +167,14 @@ export default function LoginPage() {
               </h2>
             </div>
 
-            <button className="flex items-center justify-center px-8 py-3 font-medium text-white transition-all duration-300 transform bg-transparent border-2 border-gray-600 rounded-full hover:bg-white hover:text-gray-900 hover:scale-105 group">
-              Sign In
-              <AiOutlineArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-            </button>
+           <Link href="/signup" >
+              <button className="flex items-center justify-center px-8 py-3 font-medium text-white transition-all duration-300 transform bg-transparent border-2 border-gray-600 rounded-full hover:bg-white hover:text-gray-900 hover:scale-105 group">
+                Sign Up
+                <AiOutlineArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+              </button>
+           </Link>
 
-            <p className="text-lg text-white">to start learning for free.</p>
+            <p className="mt-2 text-lg text-white ">to start learning for free.</p>
           </div>
         </div>
       </div>

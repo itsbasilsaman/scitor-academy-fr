@@ -1,5 +1,9 @@
+"use client"
+
+
 import { FaStar, FaShare } from "react-icons/fa"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 interface CourseCardProps {
   id: string
@@ -168,6 +172,7 @@ const courseData = [
 ]
 
 function CourseCard({
+  id,
   title,
   image,
   rating,
@@ -179,8 +184,18 @@ function CourseCard({
   instructor,
   isLive = false,
 }: CourseCardProps) {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push("/course-detail");
+  };
   return (
-    <div className="transition-shadow duration-200 bg-white border border-gray-100 rounded-[30px] ">
+    <div
+      className="transition-shadow duration-200 bg-white border border-gray-100 rounded-[30px] cursor-pointer hover:shadow-lg"
+      onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      onKeyPress={e => { if (e.key === 'Enter' || e.key === ' ') handleClick(); }}
+    >
       {/* Course Image */}
       <div className="relative w-full h-[300px] ">
         <Image src={"/badge-icon.png"} alt={""} width={50} height={50} className="absolute z-20 top-1 left-[-42px]" />
