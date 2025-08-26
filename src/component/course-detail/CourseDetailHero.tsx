@@ -6,6 +6,7 @@ import Image from "next/image"
 import { FaStar, FaLock } from "react-icons/fa"
 import { useState, useRef, useEffect } from "react"
 import CourseVideoPlayer, { CourseVideo } from "./CourseVideoPlayer"
+import LockedVideoModal from "../LockedVideoModal"
 
 const Button = ({
   children,
@@ -29,8 +30,7 @@ const Button = ({
   )
 }
 
-
-export default function CourseHero() {
+ export default function CourseDetail(){
   // Playlist: first video is the hero video, then the others
   const videos: CourseVideo[] = [
     {
@@ -68,6 +68,7 @@ export default function CourseHero() {
   ];
 
   const [showPlayer, setShowPlayer] = useState(false);
+  const [showLockedModal, setShowLockedModal] = useState(false);
 
   // formatTime now handled in shared component
 
@@ -102,12 +103,23 @@ export default function CourseHero() {
         {/* Center Play Button */}
         <div className="flex justify-center">
           <button
-            onClick={() => setShowPlayer(true)}
+            onClick={() => {
+              // If first video is locked, show modal, else play
+              if (videos[0].locked) {
+                setShowLockedModal(true);
+              } else {
+                setShowPlayer(true);
+              }
+            }}
             className="z-20 flex items-center justify-center w-12 h-12 border rounded-full sm:w-16 sm:h-16 bg-white/20 hover:bg-white/30 backdrop-blur-sm border-white/30"
           >
-            <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={{display:'block'}} className="sm:w-10 sm:h-10 w-7 h-7">
-              <polygon points="15,10 30,20 15,30" fill="white" />
-            </svg>
+            {videos[0].locked ? (
+              <FaLock className="text-2xl text-white animate-bounce" />
+            ) : (
+              <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={{display:'block'}} className="sm:w-10 sm:h-10 w-7 h-7">
+                <polygon points="15,10 30,20 15,30" fill="white" />
+              </svg>
+            )}
           </button>
         </div>
 
@@ -136,6 +148,7 @@ export default function CourseHero() {
         setShowPlayer={setShowPlayer}
         initialVideoId={videos[0].id}
       />
+      <LockedVideoModal open={showLockedModal} onClose={() => setShowLockedModal(false)} />
       <style jsx global>{`
         @keyframes seek-fwd2 {
           0% { opacity: 0; transform: scale(0.7) translateY(40px) rotate(-10deg); }

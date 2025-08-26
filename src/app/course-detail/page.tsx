@@ -1,4 +1,4 @@
-import CourseDetailBanner from "@/component/course-detail/Banner";
+// import CourseDetailBanner from "@/component/course-detail/Banner";
 import VideoPreviews from "@/component/course-detail/VideoPreviews";
 import CourseContent from "@/component/course-detail/CourseContent";
 import CourseDetails from "@/component/course-detail/CourseDetail";
@@ -7,9 +7,9 @@ import CourseHero from "@/component/course-detail/CourseDetailHero";
 export default function CourseDetail() {
   return (
      <>
-     <CourseDetailBanner/>
+     {/* <CourseDetailBanner/> */}
       <div className="min-h-screen ">
-      <div className="container px-4 py-6 mx-auto max-w-[89rem] ">
+      <div className="container pt-[90px]  sm:pt-[130px] px-4 py-6 mx-auto max-w-[89rem] ">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* Main Content */}
           <div className="space-y-6 lg:col-span-2">

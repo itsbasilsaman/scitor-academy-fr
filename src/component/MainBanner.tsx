@@ -40,6 +40,7 @@ function CardContent({ children, className = "" }: CardProps) {
 }
 
 export default function MainBanner() {
+  
   return (
     <div className="relative w-full h-auto px-2 overflow-x-hidden bg-white hp-2 sm:p-4 bg-gradient-to-br md:p-8">
       {/* Hide blurred circles on mobile */}

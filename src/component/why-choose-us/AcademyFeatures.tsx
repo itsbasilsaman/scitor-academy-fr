@@ -19,14 +19,14 @@ export default function AcademyFeatures() {
           </div>
               
           {/* Right Section: Features List */}
-          <div className="flex flex-col justify-center order-2 space-y-2 sm:space-y-3 md:space-y-4 md:order-none">
+          <div className="flex flex-col justify-center order-2 space-y-2 sm:space-y-3 md:space-y-4 md:order-none" >
             <h2 className="text-xl font-semibold text-white sm:text-2xl md:text-3xl">Real Industry Relevance</h2>
-            <h3 className="text-base font-normal text-gray-300 sm:text-lg md:text-xl">Bilingual Learning (English + Arabic)</h3>
-            <h3 className="text-base font-normal text-gray-300 sm:text-lg md:text-xl">Interactive Demo Classes</h3>
-            <h3 className="text-base font-normal text-gray-300 sm:text-lg md:text-xl">Certified Instructors</h3>
-            <h3 className="text-base font-normal text-gray-300 sm:text-lg md:text-xl">Affordable. Accessible. Flexible.</h3>
-            <h3 className="text-base font-normal text-gray-300 sm:text-lg md:text-xl">Personalized Learning Dashboard</h3>
-            <h3 className="text-base font-normal text-gray-300 sm:text-lg md:text-xl">Community & Support</h3>
+            <h3 className="text-base font-normal text-gray-300 sm:text-lg md:text-xl" style={{ fontFamily: '"Manrope", sans-serif' }}>Bilingual Learning (English + Arabic)</h3>
+            <h3 className="text-base font-normal text-gray-300 sm:text-lg md:text-xl" style={{ fontFamily: '"Manrope", sans-serif' }}>Interactive Demo Classes</h3>
+            <h3 className="text-base font-normal text-gray-300 sm:text-lg md:text-xl" style={{ fontFamily: '"Manrope", sans-serif' }}>Certified Instructors</h3>
+            <h3 className="text-base font-normal text-gray-300 sm:text-lg md:text-xl" style={{ fontFamily: '"Manrope", sans-serif' }}>Affordable. Accessible. Flexible.</h3>
+            <h3 className="text-base font-normal text-gray-300 sm:text-lg md:text-xl" style={{ fontFamily: '"Manrope", sans-serif' }}>Personalized Learning Dashboard</h3>
+            <h3 className="text-base font-normal text-gray-300 sm:text-lg md:text-xl" style={{ fontFamily: '"Manrope", sans-serif' }}>Community & Support</h3>
           </div>
         </div>
 
@@ -55,7 +55,7 @@ export default function AcademyFeatures() {
           <div className="p-2 pt-0 sm:p-4 sm:pt-0 md:p-8 md:pt-0">
             <div className="pl-2 border-l-4 border-blue-500">
               <h3 className="mb-2 text-base font-semibold sm:mb-3 sm:text-lg md:text-xl">Key Highlights</h3>
-              <ul className="space-y-1 text-xs text-gray-300 list-none sm:space-y-2 sm:text-base md:text-lg">
+              <ul className="space-y-1 text-xs text-gray-300 list-none sm:space-y-2 sm:text-base md:text-lg" style={{ fontFamily: '"Manrope", sans-serif' }}>
                 <li>• Industry-reviewed course modules</li>
                 <li>• Practical assignments & real-world projects</li>
                 <li>• Guest sessions by working professionals</li>

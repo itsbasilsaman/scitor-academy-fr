@@ -1,4 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap');
 @import "tailwindcss";
+/* Apply Manrope font to all paragraph and span tags */
+
+p, span , li , div{
+  font-family: "Manrope", sans-serif !important;
+}
 
 /* Outlined text for statistics */
 .text-outline {

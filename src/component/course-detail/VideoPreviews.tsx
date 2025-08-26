@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { FaPlay, FaLock } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
 import CourseVideoPlayer, { CourseVideo } from "./CourseVideoPlayer";
+import LockedVideoModal from "../LockedVideoModal";
 
 const videos: CourseVideo[] = [
   {
@@ -37,9 +38,9 @@ const VideoPreviews = () => {
   const [showPlayer, setShowPlayer] = useState(false);
 
   return (
-    <section className="px-2 my-8 sm:px-4">
-      <h2 className="mb-4 text-2xl font-bold text-center md:text-left">Course Video Previews</h2>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+    <section className="my-8 sm:px-0">
+ 
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
         {videos.map((video) => (
           <div
             key={video.id}
@@ -49,10 +50,10 @@ const VideoPreviews = () => {
               src={video.thumbnail}
               alt={video.title}
               width={400}
-              height={225}
-              className="object-cover w-full h-40 transition-transform duration-300 sm:h-48 group-hover:scale-110"
+              height={325}
+              className="object-cover w-full transition-transform duration-300 h-[214px] sm:h-48 group-hover:scale-110"
             />
-            <div className="absolute inset-0 flex flex-col justify-between p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+            <div className="absolute inset-0 flex flex-col justify-between p-4 pb-2 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
               <div className="flex justify-end">
                 {video.locked && (
                   <span className="inline-flex items-center px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full animate-pulse">
@@ -62,49 +63,36 @@ const VideoPreviews = () => {
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="mb-1 text-lg font-semibold text-white drop-shadow">{video.title}</h3>
-                  <span className="text-sm text-white/80">{video.duration}</span>
+                  <h3 className="mb-1 font-[16px] medium text-white text- drop-shadow">{video.title}</h3>
+                 
                 </div>
-                <button
-                  className={`flex items-center justify-center w-12 h-12 rounded-full bg-white/80 shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 group-hover:scale-110 group-active:scale-95 ${video.locked ? "cursor-not-allowed" : "hover:shadow-purple-400"}`}
-                  onClick={() => {
-                    if (video.locked) {
-                      setShowModal(true);
-                    } else {
-                      setShowPlayer(true);
-                    }
-                  }}
-                  disabled={video.locked}
-                  aria-label={video.locked ? "Locked" : "Play"}
-                >
-                  {video.locked ? (
-                    <FaLock className="text-xl text-gray-700 animate-bounce group-active:animate-none" />
-                  ) : (
-                    <FaPlay className="text-xl text-purple-700 group-hover:animate-pulse" />
-                  )}
-                </button>
+                        <button
+                          className={`z-20 flex items-center justify-center  w-[40px] h-[40px] border rounded-full cursor-pointer    bg-white/20 hover:bg-white/30 backdrop-blur-sm border-white/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 group-hover:scale-110 group-active:scale-95 ${video.locked ? "cursor-not-allowed" : "hover:shadow-purple-400"}`}
+                          onClick={() => {
+                            if (video.locked) {
+                              setShowModal(true);
+                            } else {
+                              setShowPlayer(true);
+                            }
+                          }}
+                          // disabled={video.locked}
+                          aria-label={video.locked ? "Locked" : "Play"}
+                        >
+                          {video.locked ? (
+                            <FaLock className="text-xl text-white animate-bounce group-active:animate-none" />
+                          ) : (
+                            <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={{display:'block'}} className="sm:w-8 sm:h-8 w-7 h-7">
+                              <polygon points="15,10 30,20 15,30" fill="white" />
+                            </svg>
+                          )}
+                        </button>
               </div>
             </div>
           </div>
         ))}
       </div>
       {/* Modal for locked video */}
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-2 bg-black/60">
-          <div className="relative w-full max-w-sm p-8 bg-white shadow-2xl rounded-xl animate-fadeIn">
-            <button
-              className="absolute text-2xl text-gray-500 top-2 right-2 hover:text-gray-700"
-              onClick={() => setShowModal(false)}
-              aria-label="Close"
-            >
-              ×
-            </button>
-            <h3 className="mb-2 text-xl font-bold">Unlock This Video</h3>
-            <p className="mb-4 text-gray-600">This lesson is locked. Please purchase the course to access all content.</p>
-            <button className="w-full py-3 font-medium text-white transition bg-purple-700 rounded-lg hover:bg-purple-800 active:scale-95">Pay & Unlock</button>
-          </div>
-        </div>
-      )}
+  <LockedVideoModal open={showModal} onClose={() => setShowModal(false)} />
 
       <CourseVideoPlayer
         videos={videos}

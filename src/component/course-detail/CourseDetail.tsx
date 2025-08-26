@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type React from "react"
+"use client"
+
+import Image from "next/image"
+// import type React from "react" // removed duplicate
 import { FaStar, FaUsers, FaCalendar, FaGlobe, FaClock, FaBook, FaAward, FaMobile } from "react-icons/fa"
 
 const Button = ({
@@ -34,32 +37,63 @@ const Card = ({ children, className = "" }: { children: React.ReactNode; classNa
   return <div className={`rounded-lg border bg-card text-card-foreground shadow-sm ${className}`}>{children}</div>
 }
 
+import React, { useState } from "react"
+// ...existing code...
+
+const CurrencyTogglerInline = ({ currency, setCurrency }: { currency: 'SAR' | 'USD'; setCurrency: (c: 'SAR' | 'USD') => void }) => (
+  <div className="flex items-center gap-2 px-1 py-1 ml-4 bg-white rounded-full shadow cursor-pointer">
+    <button
+      className={`px-3 py-1 rounded-full cursor-pointer font-semibold transition-colors duration-200 text-xs ${currency === 'SAR' ? 'bg-[#6606E3] text-white' : 'bg-gray-100 text-gray-700'}`}
+      onClick={() => setCurrency('SAR')}
+      aria-label="Show price in SAR"
+    >
+      SAR
+    </button>
+    <span className="text-xs font-bold text-gray-400">|</span>
+    <button
+      className={`px-3 py-1 rounded-full cursor-pointer font-semibold transition-colors duration-200 text-xs ${currency === 'USD' ? 'bg-[#6606E3] text-white' : 'bg-gray-100 text-gray-700'}`}
+      onClick={() => setCurrency('USD')}
+      aria-label="Show price in USD"
+    >
+      USD
+    </button>
+  </div>
+)
+
 export default function CourseDetails() {
+  const [currency, setCurrency] = useState<'SAR' | 'USD'>('SAR')
+  // Example prices
+  const prices = {
+    SAR: { current: 'SAR 1,599', old: 'SAR 1,999' },
+    USD: { current: 'USD 425', old: 'USD 530' }
+  }
   return (
     <div className="space-y-6">
       {/* Pricing Card */}
-      <Card className="p-6 border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+      <div className="p-6 bg-white border border-gray-300 rounded-[15px]">
         <div className="space-y-4">
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-gray-900">₹39,999</span>
-            <span className="text-lg text-gray-500 line-through">₹49,999</span>
+          <div className="flex items-baseline justify-between gap-2">
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold text-gray-900 font-manrope">{prices[currency].current}</span>
+              <span className="text-lg text-gray-300 line-through font-manrope">{prices[currency].old}</span>
+            </div>
+            <CurrencyTogglerInline currency={currency} setCurrency={setCurrency} />
           </div>
 
-          <Button className="w-full py-3 font-medium text-white bg-black rounded-lg hover:bg-gray-800">
+          <div className="w-full py-3 font-medium text-center text-white bg-black cursor-pointer rounded-2xl hover:bg-gray-800">
             Add to Cart
-          </Button>
+          </div>
 
-          <Button
-            variant="outline"
-            className="w-full py-3 font-medium text-purple-700 bg-transparent border-purple-200 rounded-lg hover:bg-purple-50"
+          <div
+            className="w-full py-3 font-medium text-center text-purple-700 bg-transparent border border-purple-200 cursor-pointer rounded-2xl hover:bg-purple-50"
           >
             Enroll Now
-          </Button>
+          </div>
         </div>
-      </Card>
+      </div>
 
       {/* Course Info */}
-      <Card className="p-6 border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+      <div className="p-6 border rounded-[15px] border-gray-300 bg-white/80 backdrop-blur-sm">
         <div className="space-y-4">
           <div className="flex items-center gap-3 text-sm text-gray-600">
             <FaStar className="w-4 h-4 text-purple-500" />
@@ -106,16 +140,20 @@ export default function CourseDetails() {
             <span>Access: Lifetime Access Anytime</span>
           </div>
         </div>
-      </Card>
+      </div>
 
       {/* Master Skills Card */}
-      <Card className="relative overflow-hidden text-white border-0 shadow-lg bg-gradient-to-br from-gray-800 to-gray-900">
+      <div className="relative overflow-hidden text-white border border-gray-300   bg-gradient-to-br from-gray-800 to-gray-900 rounded-[15px]">
         <div className="absolute inset-0">
-          <img
-            src="/placeholder.svg?height=300&width=400"
-            alt="Master skills"
-            className="object-cover w-full h-full opacity-60"
-          />
+            {/* Next.js Image component for optimized image handling */}
+            <Image
+              src="https://theamericaninstitute.in/wp-content/uploads/belt5-770x385.jpg"
+              alt="Master skills"
+              width={400}
+              height={400}
+              className="object-cover w-full h-full opacity-60"
+              priority
+            />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
         </div>
 
@@ -133,7 +171,7 @@ export default function CourseDetails() {
             Start Chat
           </Button>
         </div>
-      </Card>
+      </div>
     </div>
   )
 }

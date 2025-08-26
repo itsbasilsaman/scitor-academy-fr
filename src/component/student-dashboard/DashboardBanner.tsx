@@ -58,7 +58,7 @@ export default function KingsClubDashboard() {
       {/* Desktop Header */}
   <header className="items-center justify-between hidden p-6 md:flex">
         <div className="flex items-center gap-4">
-          <div className="text-2xl font-bold tracking-wider text-black">Hello Basil Saman</div>
+          <div className="text-2xl font-bold tracking-wider text-black" >Hello Basil Saman</div>
         
         </div>
 

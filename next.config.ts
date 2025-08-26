@@ -22,7 +22,10 @@ const nextConfig: NextConfig = {
       "englishlabs.in",
       "www.iare.ac.in",
       "image.freepik.com",
-       "thumbs.dreamstime.com"
+       "thumbs.dreamstime.com",
+       "theamericaninstitute.in",
+       "cdn.pixabay.com",
+       "www.cxoinsightme.com"
     ],
   },
 };
