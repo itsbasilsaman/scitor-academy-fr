@@ -1,7 +1,7 @@
 import AnimatedButtonRow from "@/component/AnimationBox";
 import ContentSection from "@/component/ContentSection";
 import HeroSection from "@/component/HeroSection";
-import InstructorTeam from "@/component/InstructorTeam";
+// import InstructorTeam from "@/component/InstructorTeam";
 import MainBanner from "@/component/MainBanner";
 import OurCourses from "@/component/ourCourses";
 import OurValues from "@/component/OurValues";
@@ -16,8 +16,8 @@ export default function Home() {
      <OurCourses/>
  
      <TestimonialSection/>
-     
-     <InstructorTeam/>
+{/*      
+     <InstructorTeam/> */}
      <HeroSection/>
      <AnimatedButtonRow/>
     </>

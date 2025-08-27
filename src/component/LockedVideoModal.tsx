@@ -33,9 +33,25 @@ const CurrencyTogglerInline = ({ currency, setCurrency }: { currency: 'SAR' | 'U
 
 const LockedVideoModal: React.FC<LockedVideoModalProps> = ({ open, onClose }) => {
   const [currency, setCurrency] = useState<'SAR' | 'USD'>('SAR');
+  const overlayRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    if (!open) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [open, onClose]);
+
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (overlayRef.current && e.target === overlayRef.current) {
+      onClose();
+    }
+  };
+
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
+    <div ref={overlayRef} className="fixed inset-0 z-50 flex items-center justify-center bg-black/80" onClick={handleOverlayClick}>
       <div className="relative flex flex-col w-full max-w-[95vw] sm:max-w-lg md:max-w-2xl gap-5 p-4 sm:p-6 md:p-10 mx-auto bg-white border border-gray-200 shadow-2xl rounded-2xl animate-fadeIn">
         <button
           className="absolute text-3xl text-gray-600 transition top-3 right-3 md:top-5 md:right-5 md:text-3xl hover:text-gray-700"

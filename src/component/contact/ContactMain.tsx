@@ -173,7 +173,7 @@ export default function ContactMain() {
                     <FiPhoneCall className="text-base text-purple-600 sm:text-lg" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-900 sm:text-lg">+91 859 036 r9978</p>
+                    <p className="text-sm font-semibold text-gray-900 sm:text-lg">+91 90748 51748</p>
                   </div>
                 </div>
               </div>

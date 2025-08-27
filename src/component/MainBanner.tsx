@@ -5,6 +5,7 @@ import type React from "react"
 import Image from "next/image"
 // ...existing code...
 import { GoArrowUpRight } from "react-icons/go";
+import Link from "next/link";
  
 
 // Manual Button Component
@@ -55,10 +56,12 @@ export default function MainBanner() {
               <h1 className="text-2xl sm:text-4xl text-gray-900 font-medium sm:font-regular md:text-5xl  pt-8 sm:pt-10 max-w-full sm:max-w-[540px]">
                 Start learning today with expert-led lessons.
               </h1>
-              <Button className="w-full text-[18px] px-2 py-3 font-semibold text-gray-900 transition-all duration-200 bg-white border border-gray-800 rounded-[15px] font-sem sm:py-3 hover:bg-gray-50 group sm:w-auto">
-                Get in Touch
-                <GoArrowUpRight className="ml-2 sm:ml-3 h-5 w-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform  " />
-              </Button>
+            <Link href={'/all-courses'}>
+                <Button className="w-full cursor-pointer text-[18px] px-2 py-3 font-semibold text-gray-900 transition-all duration-200 bg-white border border-gray-800 rounded-[15px] font-sem sm:py-3 hover:bg-gray-50 group sm:w-auto">
+                  Get in Touch
+                  <GoArrowUpRight className="ml-2 sm:ml-3 h-5 w-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform  " />
+                </Button>
+            </Link>
             </div>
 
             {/* Statistics Cards */}
