@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
       "static.vecteezy.com",
       "img-c.udemycdn.com",
       "images.cdn.kukufm.com", "s3.ap-south-1.amazonaws.com",
+      "ebz-static.s3.ap-south-1.amazonaws.com",
       "images.cdn.kukufm.com",
       "leadschool.in",
       "treecampus.in",

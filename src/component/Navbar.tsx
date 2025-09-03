@@ -1,33 +1,30 @@
 "use client"
-
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
+import { useLanguage } from "../context/LanguageContext";
 import Link from "next/link"
  
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import { CiGlobe } from "react-icons/ci";
+import { TbAlphabetArabic } from "react-icons/tb";
 import Image from "next/image";
 
 
-const navigationItems = [
-  { name: "HOME", href: "/" },
-  { name: "ABOUT", href: "/about-us" },
-  { name: "COURSES", href: "/all-courses" },
-  { name: "WHY CHOOSE US", href: "/why-choose-us" },
- 
-  { name: "CONTACT", href: "/contact-us" },
-]
+// ...existing code...
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const [isStudentLoggedIn, setIsStudentLoggedIn] = useState(false);
+  const { language, setLanguage, content } = useLanguage();
 
   useEffect(() => {
-    // Check for studentId cookie
-    const match = document.cookie.match(/(?:^|; )studentId=([^;]*)/);
-    setIsStudentLoggedIn(!!match);
+    const user = localStorage.getItem('scitorUser');
+    setIsStudentLoggedIn(!!user);
   }, []);
 
+  // Language switch icon logic
+  const LanguageIcon = language === 'ar' ? TbAlphabetArabic : CiGlobe;
+
   return (
-    <header className="fixed z-50 transition-all bg-white border border-b border-gray-300 rounded-full top-2 left-2 right-2 sm:top-4 sm:left-8 sm:right-8 lg:top-4 lg:left-16 lg:right-16">
+    <header dir="ltr" className="fixed z-50 transition-all bg-white border border-b border-gray-300 rounded-full top-2 left-2 right-2 sm:top-4 sm:left-8 sm:right-8 lg:top-4 lg:left-16 lg:right-16">
       <div className="container px-2 mx-auto sm:px-4 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
           {/* Mobile Menu Button */}
@@ -60,9 +57,9 @@ export default function Navbar() {
                       <Image
                                   src="/scitor-logo.png"
                                   alt="Play video icon"
-                                  width={150}
-                                  height={150}
-                                  className="object-cover w-8 sm:w-10 md:w-20"
+                                  width={250}
+                                  height={250}
+                                  className="object-cover w-8 sm:w-10 md:w-28"
                                 />
                   </Link >
                   </div>
@@ -75,7 +72,7 @@ export default function Navbar() {
                   </button>
                 </div>
                 <nav className="flex flex-col gap-2">
-                  {navigationItems.map((item) => (
+                  {content.navigationItems.map((item: { name: string; href: string }) => (
                     <Link
                       key={item.name}
                       href={item.href}
@@ -93,7 +90,7 @@ export default function Navbar() {
                         className="w-full px-4 py-3 text-base font-semibold text-white transition-colors rounded-lg shadow-md cursor-pointer bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600"
                         onClick={() => setIsOpen(false)}
                       >
-                        Go to Dashboard
+                        {content.dashboard}
                       </button>
                     </Link>
                   ) : (
@@ -102,11 +99,18 @@ export default function Navbar() {
                         className="w-full px-4 py-3 text-base font-semibold text-white transition-colors rounded-lg shadow-md cursor-pointer bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600"
                         onClick={() => setIsOpen(false)}
                       >
-                        Student Login
+                        {content.login}
                       </button>
                     </Link>
                   )}
                 </div>
+                <button
+                  className="flex items-center justify-center p-2 mt-4 text-gray-700 transition-all rounded-full hover:text-purple-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  aria-label="Language switch"
+                  onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
+                >
+                  <LanguageIcon className="text-[28px] sm:text-[30px] cursor-pointer" />
+                </button>
               </aside>
             </div>
           </div>
@@ -117,16 +121,16 @@ export default function Navbar() {
                <Image
                                   src="/scitor-logo.png"
                                   alt=" "
-                                  width={150}
-                                  height={150}
-                                  className="w-16 ml-4"
+                                  width={250}
+                                  height={250}
+                                  className="w-16 ml-4 lg:w-24"
                                 />
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="items-center hidden space-x-8 lg:flex">
-            {navigationItems.map((item) => (
+            {content.navigationItems.map((item: { name: string; href: string }) => (
               <Link
                 key={item.name}
                 href={item.href}
@@ -142,16 +146,17 @@ export default function Navbar() {
           <div className="flex items-center gap-2 space-x-2">
             <button
               className="relative hidden text-sm font-medium tracking-wide text-gray-600 transition-colors sm:flex hover:text-purple-600 group"
-              aria-label="Language"
+              aria-label="Language switch"
+              onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
             >
-              <CiGlobe className="text-[28px] sm:text-[30px]" />
+              <LanguageIcon className="text-[28px] sm:text-[30px] cursor-pointer" />
             </button>
            {isStudentLoggedIn ? (
              <Link href="/student-dashboard">
                <button
                  className="hidden px-5 cursor-pointer py-3 text-sm font-semibold text-white rounded-full transition-colors bg-[#6606E3] hover:bg-purple-900 sm:inline"
                >
-                 Go to Dashboard
+                 {content.dashboard}
                </button>
              </Link>
            ) : (
@@ -159,20 +164,25 @@ export default function Navbar() {
                <button
                  className="hidden px-5 cursor-pointer py-3 text-sm font-semibold text-white rounded-full transition-colors bg-[#6606E3] hover:bg-purple-900 sm:inline"
                >
-                 Student Login
+                 {content.login}
                </button>
              </Link>
            )}
             <button
               className="rounded-full text-[#6606E3]  sm:inline-block lg:hidden"
+              aria-label="Language switch"
+              onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
             >
-               <CiGlobe className="text-[28px] sm:text-[30px]" />
+               <LanguageIcon className="text-[28px] sm:text-[30px]" />
             </button>
           </div>
         </div>
       </div>
 
+
     </header>
   );
 }
+
+
 

@@ -1,18 +1,17 @@
+"use client"
 import { IoArrowDownCircleOutline } from "react-icons/io5";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ContactBanner() {
+  const { language, content } = useLanguage();
+  const breadcrumbHome = language === "ar" ? content.aboutBanner.home : content.aboutBanner.home;
+  const breadcrumbContact = language === "ar" ? content.navigationItems[4].name : content.navigationItems[4].name;
   return (
-    
     <div className="flex items-center justify-center w-full h-auto p-3 py-12 pt-16 bg-white sm:h-screen sm:p-4 md:p-6 lg:p-8">
-      <div className="
-        w-full max-w-[87rem]
-        h-[300px] sm:h-[80vh] md:h-[calc(100vh-3rem)] lg:h-[500px]
-        bg-cover bg-center bg-no-repeat
-        rounded-xl sm:rounded-2xl md:rounded-3xl
-        flex flex-col justify-center items-center
-        relative overflow-hidden mt-4 sm:mt-8
-     
-      "    style={{ backgroundImage: 'url(/contact-banner.png)' }}>
+      <div
+        className="w-full max-w-[87rem] h-[300px] sm:h-[80vh] md:h-[calc(100vh-3rem)] lg:h-[500px] bg-cover bg-center bg-no-repeat rounded-xl sm:rounded-2xl md:rounded-3xl flex flex-col justify-center items-center relative overflow-hidden mt-4 sm:mt-8"
+        style={{ backgroundImage: 'url(/contact-banner.png)' }}
+      >
         {/* Background decorative elements */}
         <div className="absolute inset-0 pointer-events-none opacity-10">
           <div className="absolute w-16 h-16 bg-white rounded-full top-8 left-4 sm:top-20 sm:left-20 sm:w-32 sm:h-32 blur-xl"></div>
@@ -24,11 +23,11 @@ export default function ContactBanner() {
         <div className="absolute z-10 top-2 left-2 sm:top-6 sm:left-6 md:top-8 md:left-8 lg:top-12 lg:left-12">
           <div className="px-3 py-2 rounded-lg shadow-sm bg-white/90 backdrop-blur-sm sm:px-6 sm:py-4">
             <nav className="flex items-center space-x-1 text-xs text-gray-600 sm:space-x-2 sm:text-sm">
-              <span className="transition-colors cursor-pointer hover:text-gray-900">Home</span>
+              <span className="transition-colors cursor-pointer hover:text-gray-900">{breadcrumbHome}</span>
               <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-              <span className="font-medium text-gray-900">Contact Us</span>
+              <span className="font-medium text-gray-900">{breadcrumbContact}</span>
             </nav>
           </div>
         </div>
@@ -43,7 +42,7 @@ export default function ContactBanner() {
         {/* Main Content */}
         <div className="max-w-4xl px-2 mx-auto text-center sm:px-4 md:px-8">
           <h1 className="mb-4 text-3xl font-light tracking-wide text-white sm:text-4xl md:text-6xl sm:mb-6 md:mb-8">
-            Contact Us
+            {breadcrumbContact}
           </h1>
         </div>
 

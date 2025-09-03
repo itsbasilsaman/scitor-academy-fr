@@ -3,9 +3,11 @@
 "use client"
 
 import { useState } from "react"
+import { useLanguage } from "../context/LanguageContext"
 import { IoChevronBack, IoChevronForward, IoPlay } from "react-icons/io5"
-import { FiArrowUpRight } from "react-icons/fi"
+import { FiArrowUpRight, FiArrowUpLeft } from "react-icons/fi"
 import Image from "next/image"
+ 
 
 // Type definitions
 interface ButtonProps {
@@ -55,48 +57,10 @@ const Button = ({ children, onClick, className = "", variant = "default", size =
 }
 
 // ...existing code...
-
-export default function OurCourses() {
-  const [currentSlide, setCurrentSlide] = useState(1)
-
-  const courses: Course[] = [
-    {
-      id: 0,
-      title: "Basic Spoken English",
-      subtitle: "Foundation course for beginners",
-      image: "/course-3.jpg",
-      bgColor: "bg-white",
-      textColor: "text-gray-800",
-      hasFlag: false,
-      hasSpeechBubble: true,
-      hasVideo: false,
-      description: "Learn essential English speaking skills",
-    },
-    {
-      id: 1,
-      title: "Intermediate English",
-      subtitle: "Office, travel, and daily conversation skills",
-      image: "/course-1.jpg",
-      bgColor: "bg-gradient-to-br from-blue-400 to-cyan-500",
-      textColor: "text-white",
-      hasFlag: true,
-      hasSpeechBubble: false,
-      hasVideo: true,
-      description: "Master professional and social English",
-    },
-    {
-      id: 2,
-      title: "Advanced English",
-      subtitle: "Fluency and advanced communication",
-      image: "/course-4.jpg",
-      bgColor: "bg-gradient-to-br from-purple-300 to-pink-300",
-      textColor: "text-gray-800",
-      hasFlag: true,
-      hasSpeechBubble: false,
-      hasVideo: false,
-      description: "Achieve native-level proficiency",
-    },
-  ]
+  export default function OurCourses(){
+    const [currentSlide, setCurrentSlide] = useState(1)
+    const { content, language } = useLanguage()
+    const courses: Course[] = content.courses
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % courses.length)
@@ -111,9 +75,11 @@ export default function OurCourses() {
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-8 text-center md:mb-12">
-          <p className="text-sm md:text-[16px] text-black mb-2">Our courses</p>
+          <p className="text-sm md:text-[16px] text-black mb-2">
+            {content.coursesSectionTitle || (language === 'ar' ? 'الدورات المتاحة' : 'Our courses')}
+          </p>
           <h1 className="text-2xl leading-tight text-gray-900 md:text-4xl lg:text-5xl font-regular">
-            Choose the Right English Course for You
+            {content.coursesSectionHeading || (language === 'ar' ? 'اختر الدورة المناسبة لك' : 'Choose the Right English Course for You')}
           </h1>
         </div>
 
@@ -186,11 +152,15 @@ export default function OurCourses() {
 
                       {/* Floating Action Button (Bottom Right, inside card, with gap) */}
                       <button
-                        className="absolute z-20 flex items-center justify-center transition-colors bg-black rounded-full shadow-lg cursor-pointer bottom-4 right-4 w-11 h-11 hover:bg-gray-800"
+                        className={`absolute z-20 flex items-center justify-center transition-colors bg-black rounded-full shadow-lg cursor-pointer bottom-4 ${language === 'ar' ? 'left-4' : 'right-4'} w-11 h-11 hover:bg-gray-800`}
                         aria-label="Go to course details"
                         type="button"
                       >
-                        <FiArrowUpRight className="w-6 h-6 text-white" />
+                        {language === 'ar' ? (
+                          <FiArrowUpLeft className="w-6 h-6 text-white" />
+                        ) : (
+                          <FiArrowUpRight className="w-6 h-6 text-white" />
+                        )}
                       </button>
               </div>
             </div>
@@ -264,11 +234,15 @@ export default function OurCourses() {
 
                       {/* Floating Diagonal Arrow Button (Bottom Right, Outside Card) */}
                       <button
-                        className="absolute z-20 flex items-center justify-center transition-colors bg-black rounded-full shadow-lg cursor-pointer bottom-4 right-4 w-11 h-11 hover:bg-gray-800"
+                        className={`absolute z-20 flex items-center justify-center transition-colors bg-black rounded-full shadow-lg cursor-pointer bottom-4 ${language === 'ar' ? 'left-4' : 'right-4'} w-11 h-11 hover:bg-gray-800`}
                         aria-label="Go to course details"
                         type="button"
                       >
-                        <FiArrowUpRight className="w-6 h-6 text-white" />
+                        {language === 'ar' ? (
+                          <FiArrowUpLeft className="w-6 h-6 text-white" />
+                        ) : (
+                          <FiArrowUpRight className="w-6 h-6 text-white" />
+                        )}
                       </button>
                     </div>
                   </div>

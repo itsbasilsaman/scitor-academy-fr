@@ -1,9 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@160..700&display=swap');
 @import "tailwindcss";
 /* Apply Manrope font to all paragraph and span tags */
 
 p, span , li , div{
   font-family: "Manrope", sans-serif !important;
+}
+
+/* Arabic font classes */
+span.arabic-text,
+p.arabic-text,
+li.arabic-text,
+div.arabic-text,
+.arabic-heading {
+  font-family: "Readex Pro", sans-serif !important;
 }
 
 /* Outlined text for statistics */

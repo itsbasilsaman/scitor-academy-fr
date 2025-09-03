@@ -1,28 +1,56 @@
+"use client"
+
 /* eslint-disable react/no-unescaped-entities */
+import "./TestimonialSection.css"
+
+import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "../context/LanguageContext";
 import { FaGraduationCap } from "react-icons/fa"
 import Image from "next/image"
 
 export default function TestimonialSection() {
-  const testimonials = [
-    {
-      text: "Scitor Academy helped me speak confidently in interviews and meetings. The demo classes were super helpful.",
-      name: "Aisha Khan",
-      location: "UAE",
-      rating: 5,
-    },
-    {
-      text: "Their spoken English course is very structured. I improved a lot in just 2 months. Highly recommended!",
-      name: "Rahul Menon",
-      location: "India",
-      rating: 5,
-    },
-    {
-      text: "I loved the bilingual (English & Arabic) support. It made learning smooth and comfortable.",
-      name: "Sara Al-Mutairi",
-      location: "Saudi Arabia",
-      rating: 5,
-    },
-  ]
+  const { language } = useLanguage();
+  const { content } = useLanguage();
+  const testimonials = content.testimonialSection.testimonialsList;
+  const sectionContent = content.testimonialSection;
+
+  // Animation state for looping testimonials (desktop only)
+  const [startIdx, setStartIdx] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    // Check screen size on mount and resize
+    const checkScreen = () => {
+      setIsDesktop(window.innerWidth >= 1024); // Tailwind lg breakpoint
+    };
+    checkScreen();
+    window.addEventListener('resize', checkScreen);
+    return () => window.removeEventListener('resize', checkScreen);
+  }, []);
+
+  useEffect(() => {
+    if (isDesktop) {
+      intervalRef.current = setInterval(() => {
+        setStartIdx((prev) => (prev + 1) % testimonials.length);
+      }, 2500);
+      return () => {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+      };
+    } else {
+      setStartIdx(0); // Always show first three on mobile
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    }
+  }, [isDesktop, testimonials.length]);
+
+  // Get 3 testimonials in a loop for desktop, first 3 for mobile
+  const visibleTestimonials = isDesktop
+    ? [
+        testimonials[startIdx],
+        testimonials[(startIdx + 1) % testimonials.length],
+        testimonials[(startIdx + 2) % testimonials.length],
+      ]
+    : testimonials.slice(0, 3);
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -52,48 +80,55 @@ export default function TestimonialSection() {
             {/* Left */}
             <div className="flex-1 w-full space-y-8">
               <div className="space-y-2">
-                <p className="text-xs tracking-wider text-gray-400 uppercase sm:text-sm">Testimonials</p>
+                <p className="text-xs tracking-wider text-gray-400 uppercase sm:text-sm">{sectionContent.testimonials}</p>
                 <h2 className="text-2xl font-semibold leading-tight text-white sm:text-3xl md:text-4xl">
-                  What Our Students Say
+                  {sectionContent.heading}
                 </h2>
               </div>
               <p className="max-w-xl text-base leading-relaxed text-gray-300 sm:text-lg">
-                Scitor Academy completely transformed my confidence in speaking English. The demo classes were engaging and gave me a real taste of the learning experience. What I loved most was how practical and career-focused the lessons were. The instructors are incredibly supportive and always ready to guide you. I've already seen an improvement in my communication skills at work. I highly recommend Scitor to anyone looking to grow professionally.
+                {sectionContent.description}
               </p>
               {/* Stats */}
               <div className="flex flex-col items-center gap-2 mt-6 sm:items-start">
-              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4">
                   <FaGraduationCap className="w-12 h-12 mb-2 text-gray-500" />
                   <div className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">12,000+</div>
-              </div>
-                <p className="text-base font-light text-gray-400 sm:text-lg">Students Empowered Worldwide</p>
+                </div>
+                <p className="text-base font-light text-gray-400 sm:text-lg">{sectionContent.stat}</p>
               </div>
             </div>
             {/* Right */}
             <div className="flex flex-col flex-1 w-full gap-6">
-              {testimonials.map((testimonial, idx) => (
+              {/* Right - Animated Testimonials */}
+              <div className="relative flex flex-col flex-1 w-full gap-6 overflow-hidden">
                 <div
-                  key={idx}
-                  className="relative rounded-2xl border border-gray-700 bg-[#282828]/90 backdrop-blur-md px-5 py-6 sm:px-7 sm:py-8 shadow-md"
+                  className="flex flex-col gap-6 animate-slideDown"
                 >
-                  <Image
-                    src="/quote.png"
-                    alt="Quote"
-                    width={32}
-                    height={32}
-                    className="absolute object-contain w-5 h-5 left-4 top-3 opacity-80"
-                  />
-                  <p className="mb-4 text-sm font-normal leading-relaxed text-white sm:text-base">
-                    {testimonial.text}
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <div className="flex">{renderStars(testimonial.rating)}</div>
-                    <span className="ml-2 text-xs text-gray-400 sm:text-sm">
-                      {testimonial.name} | {testimonial.location}
-                    </span>
-                  </div>
+                  {visibleTestimonials.map((testimonial, idx) => (
+                    <div
+                      key={idx}
+                      className="relative rounded-2xl border border-gray-700 bg-[#282828]/90 backdrop-blur-md px-5 py-6 sm:px-7 sm:py-8 shadow-md transition-transform duration-300"
+                    >
+                      <Image
+                        src="/quote.png"
+                        alt="Quote"
+                        width={32}
+                        height={32}
+                        className="absolute object-contain w-5 h-5 left-4 top-3 opacity-80"
+                      />
+                      <p className="mb-4 text-sm font-normal leading-relaxed text-white sm:text-base">
+                        {testimonial.text}
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <div className="flex">{renderStars(testimonial.rating)}</div>
+                        <span className="ml-2 text-xs text-gray-400 sm:text-sm">
+                          {testimonial.name} | {testimonial.location}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>
@@ -102,4 +137,5 @@ export default function TestimonialSection() {
       </div>
     </section>
   )
+// Add custom keyframes for animation
 }

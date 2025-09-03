@@ -1,8 +1,12 @@
+"use client"
+
 import { IoArrowDownCircleOutline } from "react-icons/io5";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function AllCoursesBanner() {
+  const { direction, language } = useLanguage();
   return (
-    <div className="flex items-center justify-center w-full h-auto p-3 py-12 pt-16 bg-white sm:h-screen sm:p-4 md:p-6 lg:p-8">
+    <div className="flex items-center justify-center w-full h-auto p-3 py-12 pt-16 bg-white sm:h-screen sm:p-4 md:p-6 lg:p-8" dir={direction}>
       <div className="
         w-full max-w-[87rem]
         h-[300px] sm:h-[80vh] md:h-[calc(100vh-3rem)] lg:h-[500px]
@@ -22,11 +26,11 @@ export default function AllCoursesBanner() {
         <div className="absolute z-10 top-2 left-2 sm:top-6 sm:left-6 md:top-8 md:left-8 lg:top-12 lg:left-12">
           <div className="px-3 py-2 rounded-lg shadow-sm bg-white/90 backdrop-blur-sm sm:px-6 sm:py-4">
             <nav className="flex items-center space-x-1 text-xs text-gray-600 sm:space-x-2 sm:text-sm">
-              <span className="transition-colors cursor-pointer hover:text-gray-900">Home</span>
+              <span className="transition-colors cursor-pointer hover:text-gray-900">{language === 'ar' ? 'الرئيسية' : 'Home'}</span>
               <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-              <span className="font-medium text-gray-900">All Courses</span>
+              <span className="font-medium text-gray-900">{language === 'ar' ? 'جميع الدورات' : 'All Courses'}</span>
             </nav>
           </div>
         </div>
@@ -37,11 +41,10 @@ export default function AllCoursesBanner() {
             <IoArrowDownCircleOutline className="text-[20px] sm:text-[24px]" />
           </button>
         </div>
-
         {/* Main Content */}
         <div className="max-w-4xl px-2 mx-auto text-center sm:px-4 md:px-8">
           <h1 className="mb-4 text-3xl font-light tracking-wide text-white sm:text-4xl md:text-6xl lg:text-7xl sm:mb-6 md:mb-8">
-            All Courses
+            {language === 'ar' ? 'جميع الدورات' : 'All Courses'}
           </h1>
         </div>
 
@@ -55,4 +58,3 @@ export default function AllCoursesBanner() {
     </div>
   )
 }
-  

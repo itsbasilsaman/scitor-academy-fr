@@ -1,7 +1,10 @@
+"use client"
+import { useLanguage } from "@/context/LanguageContext";
 import Image from "next/image"
 import Link from "next/link"
 
 export default function CallToAction() {
+  const { content } = useLanguage();
   return (
     <section className="w-full px-4 py-16 md:py-24 lg:py-32">
       <div className="relative mx-auto max-w-[87rem] overflow-hidden rounded-2xl p-8 md:p-12 lg:p-16 text-center flex flex-col items-center justify-center min-h-[250px] md:min-h-[300px]">
@@ -23,16 +26,16 @@ export default function CallToAction() {
         {/* Content Wrapper */}
         <div className="relative z-10 flex flex-col items-center justify-center">
           <h2 className="max-w-3xl mx-auto text-3xl tracking-tight text-black md:text-4xl lg:text-5xl font-regular">
-            Join the community that&apos;s shaping the future.
+            {content.callToAction?.title ?? "Join the community that's shaping the future."}
           </h2>
           <p className="max-w-2xl mx-auto mt-4 text-base text-black/90">
-            Book a free demo today or explore our trending courses.
+            {content.callToAction?.description ?? "Book a free demo today or explore our trending courses."}
           </p>
-       <Link href={'/all-courses'}>
+          <Link href={'/all-courses'}>
             <button className="px-10 py-3 mt-8 text-lg text-white bg-black rounded-lg shadow-lg hover:bg-gray-800">
-              Explore Now
+              {content.callToAction?.button ?? "Explore Now"}
             </button>
-       </Link   >
+          </Link>
         </div>
       </div>
     </section>

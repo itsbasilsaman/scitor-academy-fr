@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import type React from "react"
 import { useState } from "react"
+import { useLanguage } from "@/context/LanguageContext"
 import {   FaEnvelope, FaMapMarkerAlt,    FaComment } from "react-icons/fa"
 import { GoArrowUpRight } from "react-icons/go";
 import { FiPhoneCall } from "react-icons/fi";
@@ -11,6 +13,20 @@ import { IoIosContact } from "react-icons/io";
 import Image from "next/image"
 
 export default function ContactMain() {
+  const { language, content } = useLanguage();
+  const contactContent = (content as any).contact || {};
+  const labels = {
+    fullName: language === "ar" ? "الاسم الكامل" : "Full Name",
+    email: language === "ar" ? "البريد الإلكتروني" : "Email Address",
+    phone: language === "ar" ? "رقم الهاتف" : "Phone Number",
+    subject: language === "ar" ? "الموضوع" : "Subject",
+    message: language === "ar" ? "رسالتك" : "Message",
+    submit: language === "ar" ? "إرسال" : "Submit",
+    heading: language === "ar" ? "تواصل معنا" : "Let's Get in Touch",
+    description: language === "ar"
+      ? "سواء كان لديك أسئلة حول الدورات، الأسعار، جدولة تجربة، أو أي شيء آخر — فريقنا جاهز لمساعدتك."
+      : "Whether you have questions about courses, pricing, scheduling a demo, or anything else — our team is ready to help.",
+  };
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -28,9 +44,17 @@ export default function ContactMain() {
   }
   
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-    // Handle form submission here
+  e.preventDefault();
+  // Build WhatsApp message
+  const { fullName, email, phone, subject, message } = formData;
+  let whatsappMessage = `Enquiry about course or other details%0A`;
+  if (fullName) whatsappMessage += `Name: ${fullName}%0A`;
+  if (email) whatsappMessage += `Email: ${email}%0A`;
+  if (phone) whatsappMessage += `Phone: ${phone}%0A`;
+  if (subject) whatsappMessage += `Subject: ${subject}%0A`;
+  if (message) whatsappMessage += `Message: ${message}%0A`;
+  const whatsappUrl = `https://wa.me/917034071444?text=${encodeURI(whatsappMessage)}`;
+  window.open(whatsappUrl, '_blank');
   }
   
   
@@ -44,17 +68,16 @@ export default function ContactMain() {
             <div className="p-4 sm:p-8 lg:p-12 lg:py-16">
               <div className="space-y-6">
                 <div>
-                  <h1 className="mb-4 text-2xl text-gray-900 sm:text-3xl lg:text-5xl font-regular">{"Let's Get in Touch"}</h1>
+                  <h1 className="mb-4 text-2xl text-gray-900 sm:text-3xl lg:text-5xl font-regular">{labels.heading}</h1>
                   <p className="text-sm leading-relaxed text-gray-600 sm:text-base lg:text-base">
-                    Whether you have questions about courses, pricing, scheduling a demo, or anything else — our team is
-                    ready to help.
+                    {labels.description}
                   </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 lg:space-y-6">
                   <div>
                     <label htmlFor="fullName" className="block mb-1 ml-4 text-xs font-medium text-gray-700 sm:ml-6 lg:mb-2 lg:ml-6 sm:text-sm lg:text-sm">
-                      Full Name
+                      {labels.fullName}
                     </label>
                     <div className="relative rounded-full">
                       <IoIosContact  className="absolute text-[23px] gray-400 transform -translate-y-1/2 text- left-4 top-1/2" />
@@ -71,7 +94,7 @@ export default function ContactMain() {
 
                   <div>
                     <label htmlFor="email" className="block mb-1 ml-4 text-xs font-medium text-gray-700 sm:ml-6 lg:mb-2 lg:ml-6 sm:text-sm lg:text-sm">
-                      Email Address
+                      {labels.email}
                     </label>
                     <div className="relative">
                       <MdOutlineAlternateEmail  className="absolute text-[23px]text-gray-400 transform -translate-y-1/2 left-4 top-1/2" />
@@ -88,7 +111,7 @@ export default function ContactMain() {
 
                   <div>
                     <label htmlFor="phone" className="block mb-1 ml-4 text-xs font-medium text-gray-700 sm:ml-6 lg:mb-2 lg:ml-6 sm:text-sm lg:text-sm">
-                      Phone Number
+                      {labels.phone}
                     </label>
                     <div className="relative">
                       <FiPhoneCall className="absolute text-[17px] gray-400 transform -translate-y-1/2 text- left-4 top-1/2" />
@@ -105,7 +128,7 @@ export default function ContactMain() {
 
                   <div>
                     <label htmlFor="subject" className="block mb-1 ml-4 text-xs font-medium text-gray-700 sm:ml-6 lg:mb-2 lg:ml-6 sm:text-sm lg:text-sm ">
-                      Subject
+                      {labels.subject}
                     </label>
                     <div className="relative">
                       <FaComment className="absolute text-[16px] gray-400 transform -translate-y-1/2 text- left-4 top-1/2" />
@@ -122,7 +145,7 @@ export default function ContactMain() {
 
                   <div>
                     <label htmlFor="message" className="block mb-1 ml-4 text-xs font-medium text-gray-700 sm:ml-6 lg:mb-2 lg:ml-6 sm:text-sm lg:text-sm">
-                      Message
+                      {labels.message}
                     </label>
                     <div className="relative">
                       <SiGooglemessages className="absolute text-[20px] gray-400 text- left-4 top-3" />
@@ -141,7 +164,7 @@ export default function ContactMain() {
                     type="submit"
                     className="flex items-center justify-center w-full h-10 gap-2 px-4 py-2 text-xs font-medium text-white transition-colors bg-gray-900 rounded-full sm:h-12 lg:h-12 sm:py-3 lg:py-3 sm:text-base lg:text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 hover:bg-gray-800 focus-visible:ring-gray-900"
                   >
-                    Submit
+                    {labels.submit}
                     <GoArrowUpRight className="text-base sm:text-lg lg:text-lg" />
                   </button>
                 </form>
@@ -150,7 +173,7 @@ export default function ContactMain() {
           </div>
 
           {/* Contact Information */}
-          <div className="mt-8 space-y-6 sm:space-y-8 lg:mt-0">
+          <div className="mt-8 space-y-2 sm:space-y-3 lg:mt-0">
             {/* Profile Image */}
             <div className="hidden overflow-hidden shadow-lg sm:block rounded-3xl bg-gradient-to-br from-blue-200 to-blue-300">
               <div className="p-0">
@@ -166,14 +189,14 @@ export default function ContactMain() {
             </div>
 
             {/* Contact Details */}
-            <div className="space-y-4">
+            <div className="space-y-2">
               <div className="p-4 sm:p-6">
                 <div className="flex items-center space-x-3 sm:space-x-4">
                   <div className="p-3 bg-purple-100 rounded-full sm:p-5">
-                    <FiPhoneCall className="text-base text-purple-600 sm:text-lg" />
+                    <FiPhoneCall className="text-base text-purple-600 sm:text-lg " />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-900 sm:text-lg">+91 90748 51748</p>
+                      <p className="mx-3 text-sm font-semibold text-gray-900 sm:text-lg" dir="ltr">{contactContent.phone || "+966 0572562699"}</p>
                   </div>
                 </div>
               </div>
@@ -183,7 +206,7 @@ export default function ContactMain() {
                     <FaEnvelope className="text-base text-purple-600 sm:text-lg" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-900 sm:text-lg">support@scitoracademy.com</p>
+                      <p className="mx-3 text-sm font-semibold text-gray-900 sm:text-lg" dir="ltr">{contactContent.email || "info@scitoracademy.com"}</p>
                   </div>
                 </div>
               </div>
@@ -193,7 +216,17 @@ export default function ContactMain() {
                     <FaMapMarkerAlt className="text-base text-purple-600 sm:text-lg" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-900 sm:text-lg">2nd Floor, ABC Towers, Kochi, Kerala</p>
+                      <p
+                        className={`text-sm font-semibold text-gray-900 sm:text-lg mx-3 ${language === "ar" ? "text-right" : "text-left"}`}
+                        dir={language === "ar" ? "rtl" : "ltr"}
+                      >
+                        {(contactContent.address || (language === "ar"
+                          ? "المملكة العربية السعودية\nمبنى رقم 6143، 1 طريق الملك عبدالعزيز، العارض، الرياض 13342، المملكة العربية السعودية"
+                          : "Saudi Arabia\nBuilding No. 6143, 1 King Abdulaziz Rd, Al Aarid, Riyadh 13342, Saudi Arabia"))
+                          .split(/\\n|\n/).map((line: string, idx: number) => (
+                            <span key={idx}>{line}<br /></span>
+                          ))}
+                      </p>
                   </div>
                 </div>
               </div>

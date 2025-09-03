@@ -1,7 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import { allowedUsers } from "./allowedUsers";
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../Redux/ApiThunks';
+import type { RootState, AppDispatch } from '../../Redux/Store';
+
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineArrowRight } from "react-icons/ai"
 import { MdOutlineArrowOutward } from "react-icons/md";
 import Image from "next/image";
@@ -11,20 +14,34 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [userId, setUserId] = useState("")
   const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading, error, user } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    // Check localStorage for user on mount
+    const storedUser = localStorage.getItem('scitorUser');
+    if (storedUser) {
+      setIsLoggedIn(true);
+      // Optionally redirect automatically:
+      window.location.href = "/student-dashboard";
+    }
+  }, []);
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    const found = allowedUsers.find(
-      (user) => user.id === userId && user.password === password
-    );
-    if (found) {
-      setError("");
-      document.cookie = `studentId=${userId}; path=/`;
-      window.location.href = "/student-dashboard";
-    } else {
-      setError("Invalid User ID or Password. Only authorized students can login.");
-    }
+    const trimmedUserId = userId.replace(/\s+/g, '');
+    const trimmedPassword = password.replace(/\s+/g, '');
+    dispatch(loginUser({ uniqueId: trimmedUserId, password: trimmedPassword }));
   };
+
+  useEffect(() => {
+    if (user && user.success) {
+      localStorage.setItem('scitorUser', JSON.stringify(user));
+      setIsLoggedIn(true);
+      window.location.href = "/student-dashboard";
+    }
+  }, [user]);
 
   return (
     <div className="relative flex flex-col min-h-screen pt-20 sm:pt-15 lg:flex-row">
@@ -46,42 +63,53 @@ export default function LoginPage() {
             <p className="text-[16px] gray-600 text- font-regular ">Login with your Student User ID and Password to access your dashboard.</p>
           </div>
 
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-            <div className="space-y-2">
-              <label htmlFor="userid" className="ml-8 block text-[12px] font-regular  text-[#737F8D]">
-                User ID *
-              </label>
-              <div className="relative flex items-center w-full px-4 transition-all duration-200 border border-gray-400 rounded-full bg-[#F2F8FF] h-14 focus-within:ring-2 focus-within:ring-blue-200">
-                <Image src="/name-card.png" alt="User ID" width={24} height={24} className="w-4 mr-3" />
-                <input
-                  id="userid"
-                  type="text"
-                  value={userId}
-                  onChange={(e) => setUserId(e.target.value)}
-                  className="flex-1 h-full text-base text-gray-700 placeholder-gray-400 bg-transparent border-none outline-none autofill:bg-[#F2F8FF] font-regular"
-                  placeholder="Enter your User ID"
-                  autoComplete="username"
-                  style={{ backgroundColor: 'transparent' }}
-                />
+          {isLoggedIn ? (
+            <Link href="/student-dashboard">
+              <button
+                type="button"
+                className="w-full h-12 bg-gray-900 hover:bg-gray-800 text-white rounded-full font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center group"
+              >
+                Go to Student Dashboard
+                <MdOutlineArrowOutward className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+              </button>
+            </Link>
+          ) : (
+            <form className="space-y-6" onSubmit={handleLogin}>
+              <div className="space-y-2">
+                <label htmlFor="userid" className="ml-8 block text-[12px] font-regular  text-[#737F8D]">
+                  User ID *
+                </label>
+                <div className="relative flex items-center w-full px-4 transition-all duration-200 border border-gray-400 rounded-full bg-[#F2F8FF] h-14 focus-within:ring-2 focus-within:ring-blue-200">
+                  <Image src="/name-card.png" alt="User ID" width={24} height={24} className="w-4 mr-3" />
+                  <input
+                    id="userid"
+                    type="text"
+                    value={userId}
+                    onChange={(e) => setUserId(e.target.value)}
+                    className="flex-1 h-full text-base text-gray-700 placeholder-gray-400 bg-transparent border-none outline-none autofill:bg-[#F2F8FF] font-regular"
+                    placeholder="Enter your User ID"
+                    autoComplete="username"
+                    style={{ backgroundColor: 'transparent' }}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <label htmlFor="password" className="ml-8 block text-[12px] font-regular  text-[#737F8D]">
-                Password *
-              </label>
-              <div className="relative flex items-center w-full px-4 transition-all duration-200 border border-gray-400 rounded-full bg-[#F2F8FF] h-14 focus-within:ring-2 focus-within:ring-blue-200">
-                <Image src="/password.png" alt="Password" width={24} height={24} className="w-4 mr-3" />
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="flex-1 h-full pr-10 text-base text-gray-700 placeholder-gray-400 bg-transparent border-none outline-none autofill:bg-[#F2F8FF] font-regular"
-                  placeholder="Enter your Password"
-                  autoComplete="current-password"
-                  style={{ backgroundColor: 'transparent' }}
-                />
+              <div className="space-y-2">
+                <label htmlFor="password" className="ml-8 block text-[12px] font-regular  text-[#737F8D]">
+                  Password *
+                </label>
+                <div className="relative flex items-center w-full px-4 transition-all duration-200 border border-gray-400 rounded-full bg-[#F2F8FF] h-14 focus-within:ring-2 focus-within:ring-blue-200">
+                  <Image src="/password.png" alt="Password" width={24} height={24} className="w-4 mr-3" />
+                  <input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="flex-1 h-full pr-10 text-base text-gray-700 placeholder-gray-400 bg-transparent border-none outline-none autofill:bg-[#F2F8FF] font-regular"
+                    placeholder="Enter your Password"
+                    autoComplete="current-password"
+                    style={{ backgroundColor: 'transparent' }}
+                  />
       <style jsx global>{`
         input:-webkit-autofill,
         input:-webkit-autofill:focus,
@@ -95,31 +123,32 @@ export default function LoginPage() {
           font-family: var(--font-regular, inherit) !important;
         }
       `}</style>
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute text-gray-400 right-4 hover:text-gray-600 focus:outline-none"
-                  style={{ top: '50%', transform: 'translateY(-50%)' }}
-                >
-                  {showPassword ? <AiOutlineEyeInvisible className="w-5 h-5" /> : <AiOutlineEye className="w-5 h-5" />}
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute text-gray-400 right-4 hover:text-gray-600 focus:outline-none"
+                    style={{ top: '50%', transform: 'translateY(-50%)' }}
+                  >
+                    {showPassword ? <AiOutlineEyeInvisible className="w-5 h-5" /> : <AiOutlineEye className="w-5 h-5" />}
+                  </button>
+                </div>
               </div>
-            </div>
 
-            {/* Error Message */}
-            {error && (
-              <div className="mb-2 text-sm text-center text-red-600">{error}</div>
-            )}
+              {/* Error Message */}
+              {error && (
+                <div className="mb-2 text-sm text-center text-red-600">{error}</div>
+              )}
 
-            <button
-              type="submit"
-              className="w-full h-12 bg-gray-900 hover:bg-gray-800 text-white rounded-full font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center group"
-              onClick={handleLogin}
-            >
-              Login
-              <MdOutlineArrowOutward className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-            </button>
-          </form>
+              <button
+                type="submit"
+                className="w-full h-12 bg-gray-900 hover:bg-gray-800 text-white rounded-full font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center group"
+                disabled={loading}
+              >
+                {loading ? "Logging in..." : "Login"}
+                <MdOutlineArrowOutward className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+              </button>
+            </form>
+          )}
         </div>
       </div>
 
