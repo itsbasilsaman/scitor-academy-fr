@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { loginUser } from './ApiThunks';
 import { fetchCourses } from './ApiThunks';
 
+import { fetchCourseById } from './ApiThunks';
+
 
 interface AuthState {
 	loading: boolean;
@@ -73,6 +75,22 @@ const coursesSlice = createSlice({
 				state.data = null;
 				state.error = action.payload as string;
 			});
+				// Handle fetchCourseById
+				builder
+					.addCase(fetchCourseById.pending, (state) => {
+						state.loading = true;
+						state.error = null;
+					})
+					.addCase(fetchCourseById.fulfilled, (state, action) => {
+						state.loading = false;
+						state.data = action.payload.data;
+						state.error = null;
+					})
+					.addCase(fetchCourseById.rejected, (state, action) => {
+						state.loading = false;
+						state.data = null;
+						state.error = action.payload as string;
+					});
 	},
 });
 

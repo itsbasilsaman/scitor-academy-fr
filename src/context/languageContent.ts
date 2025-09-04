@@ -117,6 +117,8 @@ const languageContent = {
           hasSpeechBubble: true,
           hasVideo: false,
           description: "Learn essential English speaking skills",
+          price: 39999,
+          originalPrice: 49999,
         },
         {
           id: 1,
@@ -129,6 +131,8 @@ const languageContent = {
           hasSpeechBubble: false,
           hasVideo: true,
           description: "Master professional and social English",
+          price: 49999,
+          originalPrice: 59999,
         },
         {
           id: 2,
@@ -141,6 +145,8 @@ const languageContent = {
           hasSpeechBubble: false,
           hasVideo: false,
           description: "Achieve native-level proficiency",
+          price: 59999,
+          originalPrice: 69999,
         },
       ],
   },
@@ -326,6 +332,8 @@ const languageContent = {
           hasSpeechBubble: true,
           hasVideo: false,
           description: "تعلم أساسيات مهارات التحدث بالإنجليزية",
+          price: 39999,
+          originalPrice: 49999,
         },
         {
           id: 1,
@@ -338,6 +346,8 @@ const languageContent = {
           hasSpeechBubble: false,
           hasVideo: true,
           description: "إتقان الإنجليزية المهنية والاجتماعية",
+          price: 49999,
+          originalPrice: 59999,
         },
         {
           id: 2,
@@ -350,6 +360,8 @@ const languageContent = {
           hasSpeechBubble: false,
           hasVideo: false,
           description: "تحقيق مستوى الطلاقة الأصلي",
+          price: 59999,
+          originalPrice: 69999,
         },
       ],
   },

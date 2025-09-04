@@ -27,3 +27,16 @@ export const loginUser = createAsyncThunk(
 		}
 	}
 );
+// Fetch course by ID
+export const fetchCourseById = createAsyncThunk(
+	'courses/fetchCourseById',
+	async (id: string, thunkAPI) => {
+		try {
+			const response = await api.get(`/admin/getCourseById/${id}`);
+			console.log('GetCourseById API response:', response.data.data);
+			return response.data.data;
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.response?.data?.message || 'Failed to fetch course by id');
+		}
+	}
+);

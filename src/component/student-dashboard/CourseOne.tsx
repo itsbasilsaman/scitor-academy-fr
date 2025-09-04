@@ -3,7 +3,7 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import StudentVideoPlayer from "./StudentVideoPlayer"
+import StudentVideoPlayer from "../../app/course-details/[id]/StudentVideoPlayer"
 import { FiSearch, FiChevronLeft, FiFilter, FiCalendar, FiStar, FiPlay } from "react-icons/fi"
 import Image from "next/image";
 
